@@ -456,8 +456,8 @@
     /* ANIMATIONS SCROLL */
     .reveal {
       opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
+      transform: translateY(60px);
+      transition: opacity 0.9s cubic-bezier(0.4,0,0.2,1), transform 0.9s cubic-bezier(0.4,0,0.2,1);
     }
     .reveal.visible {
       opacity: 1;
@@ -465,8 +465,8 @@
     }
     .reveal-left {
       opacity: 0;
-      transform: translateX(-40px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
+      transform: translateX(-60px);
+      transition: opacity 0.9s cubic-bezier(0.4,0,0.2,1), transform 0.9s cubic-bezier(0.4,0,0.2,1);
     }
     .reveal-left.visible {
       opacity: 1;
@@ -474,8 +474,8 @@
     }
     .reveal-right {
       opacity: 0;
-      transform: translateX(40px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
+      transform: translateX(60px);
+      transition: opacity 0.9s cubic-bezier(0.4,0,0.2,1), transform 0.9s cubic-bezier(0.4,0,0.2,1);
     }
     .reveal-right.visible {
       opacity: 1;
@@ -820,7 +820,7 @@
       });
     }, { threshold: 0.15 });
 
-    var counterObserver = new IntersectionObserver(function(entries) {
+    var scrollObserver = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
         if(entry.isIntersecting) {
           entry.target.classList.add('visible');
@@ -828,12 +828,13 @@
           counters.forEach(function(counter) {
             animateCounter(counter, parseInt(counter.getAttribute('data-count')));
           });
+          scrollObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.15 });
+    }, { threshold: 0.2, rootMargin: '0px 0px -80px 0px' });
 
     document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(function(el) {
-      counterObserver.observe(el);
+      scrollObserver.observe(el);
     });
 
     var selectedService = '', selectedPrice = '', selectedDate = '', selectedTime = '';
