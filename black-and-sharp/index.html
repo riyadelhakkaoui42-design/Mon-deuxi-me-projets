@@ -11,11 +11,11 @@
 
     :root {
       --gold: #c9a84c;
-      --dark: #ffffff;
-      --dark2: #f7f7f7;
-      --dark3: #efefef;
-      --white: #111111;
-      --gray: #666;
+      --dark: #3a3a3a;
+      --dark2: #444444;
+      --dark3: #4f4f4f;
+      --white: #f5f5f5;
+      --gray: #aaa;
     }
 
     body {
@@ -55,8 +55,8 @@
       justify-content: space-between;
       align-items: center;
       padding: 20px 60px;
-      background: rgba(255,255,255,0.97);
-      border-bottom: 1px solid #e0e0e0;
+      background: rgba(58,58,58,0.97);
+      border-bottom: 1px solid #555;
     }
 
     .logo {
@@ -788,11 +788,7 @@
       });
     }
     function getScrollColor() {
-      var scrollY = window.scrollY || window.pageYOffset;
-      var docH = document.body.scrollHeight - window.innerHeight;
-      var pct = scrollY / docH;
-      if(pct > 0.3 && pct < 0.75) return '255,255,255';
-      return '0,0,0';
+      return '255,255,255';
     }
 
     function animateParticles() {
