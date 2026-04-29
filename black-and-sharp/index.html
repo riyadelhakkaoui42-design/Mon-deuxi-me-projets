@@ -432,6 +432,35 @@
       footer { padding: 40px 24px; flex-direction: column; text-align: center; }
       .stats { gap: 40px; padding: 40px 20px; }
     }
+    /* ANIMATIONS SCROLL */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
   </style>
 </head>
 <body>
@@ -459,7 +488,7 @@
   </section>
 
   <!-- STATS -->
-  <div class="stats">
+  <div class="stats reveal">
     <div class="stat-item">
       <div class="stat-number">8+</div>
       <div class="stat-label">Années d'expérience</div>
@@ -479,7 +508,7 @@
   </div>
 
   <!-- SERVICES -->
-  <section class="services" id="services">
+  <section class="services reveal" id="services">
     <p class="section-tag">Ce que nous proposons</p>
     <h2 class="section-title">Nos Services</h2>
     <div class="section-line"></div>
@@ -512,13 +541,13 @@
   </section>
 
   <!-- ABOUT -->
-  <section class="about" id="about">
+  <section class="about" id="about" >
     <img
-      class="about-img"
+      class="about-img reveal-left"
       src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=800"
       alt="Barbier professionnel"
     />
-    <div class="about-text">
+    <div class="about-text reveal-right">
       <p class="section-tag">Notre histoire</p>
       <h2 class="section-title">L'Excellence<br/>au Rasoir</h2>
       <div class="section-line"></div>
@@ -529,7 +558,7 @@
   </section>
 
   <!-- GALLERY -->
-  <section class="gallery" id="gallery">
+  <section class="gallery reveal" id="gallery">
     <p class="section-tag">Notre travail</p>
     <h2 class="section-title">Galerie</h2>
     <div class="section-line"></div>
@@ -544,7 +573,7 @@
   </section>
 
   <!-- TESTIMONIALS -->
-  <section class="testimonials">
+  <section class="testimonials reveal">
     <p class="section-tag">Ce qu'ils disent</p>
     <h2 class="section-title">Avis Clients</h2>
     <div class="section-line"></div>
@@ -705,6 +734,19 @@
   </footer>
 
   <script>
+    /* Scroll animations */
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if(entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(function(el) {
+      observer.observe(el);
+    });
+
     var selectedService = '', selectedPrice = '', selectedDate = '', selectedTime = '';
     var jours = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
     var mois = ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
