@@ -655,29 +655,37 @@
 
         <!-- STEP 1 : Service -->
         <div id="step-1">
-          <h3 style="font-family:'Playfair Display',serif;font-size:26px;margin-bottom:8px;">Choisissez votre service</h3>
-          <p style="color:#666;font-size:13px;margin-bottom:36px;">Sélectionnez une prestation pour continuer</p>
+          <h3 style="font-family:'Playfair Display',serif;font-size:26px;margin-bottom:8px;">Choisissez vos services</h3>
+          <p style="color:#666;font-size:13px;margin-bottom:36px;">Sélectionnez un ou plusieurs services</p>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;">
-            <div class="svc-card" onclick="selectService(this,'Coupe Signature','25€')" style="border:1px solid #2a2a2a;border-radius:10px;padding:28px 20px;cursor:pointer;transition:all 0.3s;text-align:center;">
+            <div class="svc-card" onclick="toggleService(this,'Coupe Signature',25)" style="border:1px solid #2a2a2a;border-radius:10px;padding:28px 20px;cursor:pointer;transition:all 0.3s;text-align:center;position:relative;">
               <div style="font-size:30px;margin-bottom:12px;">✂️</div>
               <div style="font-weight:600;margin-bottom:6px;">Coupe Signature</div>
               <div style="color:var(--gold);font-size:18px;font-weight:700;">25€</div>
+              <div class="check-badge" style="display:none;position:absolute;top:10px;right:10px;background:var(--gold);color:#000;border-radius:50%;width:22px;height:22px;font-size:12px;line-height:22px;">✓</div>
             </div>
-            <div class="svc-card" onclick="selectService(this,'Rasage Traditionnel','30€')" style="border:1px solid #2a2a2a;border-radius:10px;padding:28px 20px;cursor:pointer;transition:all 0.3s;text-align:center;">
+            <div class="svc-card" onclick="toggleService(this,'Rasage Traditionnel',30)" style="border:1px solid #2a2a2a;border-radius:10px;padding:28px 20px;cursor:pointer;transition:all 0.3s;text-align:center;position:relative;">
               <div style="font-size:30px;margin-bottom:12px;">🪒</div>
               <div style="font-weight:600;margin-bottom:6px;">Rasage Traditionnel</div>
               <div style="color:var(--gold);font-size:18px;font-weight:700;">30€</div>
+              <div class="check-badge" style="display:none;position:absolute;top:10px;right:10px;background:var(--gold);color:#000;border-radius:50%;width:22px;height:22px;font-size:12px;line-height:22px;">✓</div>
             </div>
-            <div class="svc-card" onclick="selectService(this,'Pack Premium','55€')" style="border:1px solid #2a2a2a;border-radius:10px;padding:28px 20px;cursor:pointer;transition:all 0.3s;text-align:center;">
+            <div class="svc-card" onclick="toggleService(this,'Pack Premium',55)" style="border:1px solid #2a2a2a;border-radius:10px;padding:28px 20px;cursor:pointer;transition:all 0.3s;text-align:center;position:relative;">
               <div style="font-size:30px;margin-bottom:12px;">👑</div>
               <div style="font-weight:600;margin-bottom:6px;">Pack Premium</div>
               <div style="color:var(--gold);font-size:18px;font-weight:700;">55€</div>
+              <div class="check-badge" style="display:none;position:absolute;top:10px;right:10px;background:var(--gold);color:#000;border-radius:50%;width:22px;height:22px;font-size:12px;line-height:22px;">✓</div>
             </div>
-            <div class="svc-card" onclick="selectService(this,'Taille de Barbe','20€')" style="border:1px solid #2a2a2a;border-radius:10px;padding:28px 20px;cursor:pointer;transition:all 0.3s;text-align:center;">
+            <div class="svc-card" onclick="toggleService(this,'Taille de Barbe',20)" style="border:1px solid #2a2a2a;border-radius:10px;padding:28px 20px;cursor:pointer;transition:all 0.3s;text-align:center;position:relative;">
               <div style="font-size:30px;margin-bottom:12px;">🧔</div>
               <div style="font-weight:600;margin-bottom:6px;">Taille de Barbe</div>
               <div style="color:var(--gold);font-size:18px;font-weight:700;">20€</div>
+              <div class="check-badge" style="display:none;position:absolute;top:10px;right:10px;background:var(--gold);color:#000;border-radius:50%;width:22px;height:22px;font-size:12px;line-height:22px;">✓</div>
             </div>
+          </div>
+          <div style="margin-top:30px;display:flex;justify-content:space-between;align-items:center;">
+            <div id="total-display" style="color:var(--gold);font-size:18px;font-weight:700;"></div>
+            <button onclick="validateServices()" id="btn-next-services" style="display:none;background:var(--gold);color:#000;border:none;padding:16px 36px;border-radius:8px;font-family:'Poppins',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">Suivant →</button>
           </div>
         </div>
 
@@ -838,7 +846,37 @@
       scrollObserver.observe(el);
     });
 
-    var selectedService = '', selectedPrice = '', selectedDate = '', selectedTime = '';
+    var selectedServices = [], selectedDate = '', selectedTime = '';
+
+    function toggleService(el, name, price) {
+      var idx = selectedServices.findIndex(function(s){ return s.name === name; });
+      if(idx > -1) {
+        selectedServices.splice(idx, 1);
+        el.style.border = '1px solid #2a2a2a';
+        el.style.background = 'transparent';
+        el.querySelector('.check-badge').style.display = 'none';
+      } else {
+        selectedServices.push({ name: name, price: price });
+        el.style.border = '1px solid var(--gold)';
+        el.style.background = 'rgba(201,168,76,0.07)';
+        el.querySelector('.check-badge').style.display = 'block';
+      }
+      var total = selectedServices.reduce(function(sum, s){ return sum + s.price; }, 0);
+      var display = document.getElementById('total-display');
+      var btn = document.getElementById('btn-next-services');
+      if(selectedServices.length > 0) {
+        display.textContent = selectedServices.map(function(s){ return s.name; }).join(' + ') + ' — ' + total + '€';
+        btn.style.display = 'block';
+      } else {
+        display.textContent = '';
+        btn.style.display = 'none';
+      }
+    }
+
+    function validateServices() {
+      if(selectedServices.length === 0) return;
+      goStep(2);
+    }
     var jours = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
     var mois = ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
     var heures = ['09:00','09:15','09:30','09:45','10:00','10:15','10:30','10:45','11:00','11:15','11:30','11:45','12:00','12:15','12:30','12:45','13:00','13:15','13:30','13:45','14:00','14:15','14:30','14:45','15:00','15:15','15:30','15:45','16:00','16:15','16:30','16:45','17:00','17:15','17:30','17:45','18:00','18:15','18:30','18:45','19:00','19:15','19:30','19:45'];
@@ -853,19 +891,13 @@
       if(n===2) buildDateGrid();
       if(n===3) buildTimeGrid();
       if(n===4) {
-        document.getElementById('confirm-service').textContent = selectedService + ' — ' + selectedPrice;
+        var total = selectedServices.reduce(function(sum,s){ return sum+s.price; },0);
+        document.getElementById('confirm-service').textContent = selectedServices.map(function(s){ return s.name; }).join(' + ') + ' — ' + total + '€';
         document.getElementById('confirm-date').textContent = selectedDate;
         document.getElementById('confirm-time').textContent = selectedTime;
       }
     }
 
-    function selectService(el, name, price) {
-      document.querySelectorAll('.svc-card').forEach(function(c){ c.style.border='1px solid #2a2a2a'; c.style.background='transparent'; });
-      el.style.border = '1px solid var(--gold)';
-      el.style.background = 'rgba(201,168,76,0.07)';
-      selectedService = name; selectedPrice = price;
-      setTimeout(function(){ goStep(2); }, 300);
-    }
 
     function buildDateGrid() {
       var grid = document.getElementById('date-grid');
