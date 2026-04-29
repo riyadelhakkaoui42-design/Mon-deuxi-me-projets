@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Black & Sharp Barber</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold: #c9a84c;
+      --dark: #0a0a0a;
+      --dark2: #111111;
+      --dark3: #1a1a1a;
+      --white: #f5f5f5;
+      --gray: #888;
+    }
+
+    body {
+      background-color: var(--dark);
+      color: var(--white);
+      font-family: 'Poppins', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      background: rgba(10,10,10,0.95);
+      border-bottom: 1px solid #222;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      color: var(--gold);
+      letter-spacing: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-btn {
+      background: var(--gold);
+      color: var(--dark) !important;
+      padding: 10px 24px;
+      font-weight: 600 !important;
+      border-radius: 2px;
+    }
+
+    /* HERO */
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 20px;
+      background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)),
+        url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1600') center/cover no-repeat;
+    }
+
+    .hero-content h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(42px, 8vw, 90px);
+      line-height: 1.1;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+
+    .hero-content h1 span { color: var(--gold); }
+
+    .hero-sub {
+      font-size: 13px;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 30px;
+    }
+
+    .hero-desc {
+      font-size: 16px;
+      font-weight: 300;
+      color: #aaa;
+      max-width: 500px;
+      margin: 0 auto 40px;
+      line-height: 1.8;
+    }
+
+    .btn-gold {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--dark);
+      padding: 16px 40px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: opacity 0.3s;
+    }
+
+    .btn-gold:hover { opacity: 0.85; }
+
+    .btn-outline {
+      display: inline-block;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      padding: 16px 40px;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      margin-left: 16px;
+      transition: all 0.3s;
+    }
+
+    .btn-outline:hover {
+      background: var(--gold);
+      color: var(--dark);
+    }
+
+    /* SECTION TITRE */
+    .section-tag {
+      font-size: 11px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(30px, 5vw, 50px);
+      margin-bottom: 20px;
+    }
+
+    .section-line {
+      width: 50px;
+      height: 2px;
+      background: var(--gold);
+      margin: 0 auto 50px;
+    }
+
+    /* STATS */
+    .stats {
+      background: var(--dark2);
+      padding: 60px 40px;
+      display: flex;
+      justify-content: center;
+      gap: 80px;
+      flex-wrap: wrap;
+      border-top: 1px solid #1e1e1e;
+      border-bottom: 1px solid #1e1e1e;
+    }
+
+    .stat-item { text-align: center; }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px;
+      color: var(--gold);
+    }
+
+    .stat-label {
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-top: 6px;
+    }
+
+    /* SERVICES */
+    .services {
+      padding: 100px 60px;
+      text-align: center;
+      background: var(--dark);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      background: var(--dark3);
+      border: 1px solid #222;
+      padding: 40px 30px;
+      border-radius: 4px;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    .service-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-6px);
+    }
+
+    .service-icon {
+      font-size: 36px;
+      margin-bottom: 20px;
+    }
+
+    .service-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: var(--white);
+    }
+
+    .service-card p {
+      font-size: 13px;
+      color: var(--gray);
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .service-price {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    /* ABOUT */
+    .about {
+      padding: 100px 60px;
+      background: var(--dark2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 80px;
+      flex-wrap: wrap;
+    }
+
+    .about-img {
+      width: 400px;
+      height: 500px;
+      object-fit: cover;
+      border-radius: 4px;
+      border: 1px solid #222;
+      flex-shrink: 0;
+    }
+
+    .about-text { max-width: 480px; }
+    .about-text .section-line { margin: 0 0 30px; }
+
+    .about-text p {
+      font-size: 15px;
+      font-weight: 300;
+      color: #aaa;
+      line-height: 2;
+      margin-bottom: 20px;
+    }
+
+    /* GALLERY */
+    .gallery {
+      padding: 100px 60px;
+      text-align: center;
+      background: var(--dark);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .gallery-grid img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 4px;
+      transition: transform 0.4s, opacity 0.4s;
+    }
+
+    .gallery-grid img:hover {
+      transform: scale(1.03);
+      opacity: 0.85;
+    }
+
+    /* TESTIMONIALS */
+    .testimonials {
+      padding: 100px 60px;
+      background: var(--dark2);
+      text-align: center;
+    }
+
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .testi-card {
+      background: var(--dark3);
+      border: 1px solid #222;
+      padding: 36px 28px;
+      border-radius: 4px;
+      text-align: left;
+    }
+
+    .stars { color: var(--gold); font-size: 16px; margin-bottom: 16px; }
+
+    .testi-card p {
+      font-size: 14px;
+      color: #aaa;
+      line-height: 1.9;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .testi-author {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 1px;
+    }
+
+    /* BOOKING */
+    .booking {
+      padding: 100px 60px;
+      text-align: center;
+      background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)),
+        url('https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=1600') center/cover no-repeat;
+    }
+
+    .booking-form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .booking-form input,
+    .booking-form select {
+      flex: 1;
+      min-width: 200px;
+      padding: 16px 20px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid #333;
+      border-radius: 2px;
+      color: var(--white);
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .booking-form input:focus,
+    .booking-form select:focus { border-color: var(--gold); }
+
+    .booking-form select option { background: var(--dark3); }
+
+    /* FOOTER */
+    footer {
+      background: #050505;
+      padding: 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      color: var(--gold);
+    }
+
+    .footer-info {
+      font-size: 13px;
+      color: var(--gray);
+      line-height: 2;
+    }
+
+    .footer-info span { color: var(--gold); }
+
+    .footer-copy {
+      font-size: 12px;
+      color: #444;
+      text-align: center;
+      width: 100%;
+      padding-top: 30px;
+      border-top: 1px solid #1a1a1a;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .hero-content h1 { font-size: 42px; }
+      .btn-outline { margin-left: 0; margin-top: 12px; display: block; text-align: center; }
+      .services, .gallery, .booking, .testimonials { padding: 60px 24px; }
+      .about { padding: 60px 24px; flex-direction: column; }
+      .about-img { width: 100%; height: 300px; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      footer { padding: 40px 24px; flex-direction: column; text-align: center; }
+      .stats { gap: 40px; padding: 40px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="logo">B&S</div>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">À Propos</a></li>
+      <li><a href="#gallery">Galerie</a></li>
+      <li><a href="#booking" class="nav-btn">Réserver</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-sub">Barbier Premium — Paris</p>
+      <h1>Black &<br/><span>Sharp</span></h1>
+      <p class="hero-desc">L'art de la coupe masculine. Précision, style et excellence dans chaque détail.</p>
+      <a href="#booking" class="btn-gold">Prendre Rendez-vous</a>
+      <a href="#services" class="btn-outline">Nos Services</a>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat-item">
+      <div class="stat-number">8+</div>
+      <div class="stat-label">Années d'expérience</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">3K+</div>
+      <div class="stat-label">Clients satisfaits</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">100%</div>
+      <div class="stat-label">Satisfaction client</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">5★</div>
+      <div class="stat-label">Note moyenne</div>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <p class="section-tag">Ce que nous proposons</p>
+    <h2 class="section-title">Nos Services</h2>
+    <div class="section-line"></div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">✂️</div>
+        <h3>Coupe Signature</h3>
+        <p>Une coupe sur mesure adaptée à votre morphologie et votre style personnel.</p>
+        <div class="service-price">25€</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🪒</div>
+        <h3>Rasage Traditionnel</h3>
+        <p>Rasage au coupe-chou avec serviettes chaudes pour une peau parfaite.</p>
+        <div class="service-price">30€</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">👑</div>
+        <h3>Pack Premium</h3>
+        <p>Coupe + barbe + soin du visage. L'expérience complète Black & Sharp.</p>
+        <div class="service-price">55€</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🧔</div>
+        <h3>Taille de Barbe</h3>
+        <p>Modelage et entretien de barbe avec produits de soin professionnels.</p>
+        <div class="service-price">20€</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <img
+      class="about-img"
+      src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=800"
+      alt="Barbier professionnel"
+    />
+    <div class="about-text">
+      <p class="section-tag">Notre histoire</p>
+      <h2 class="section-title">L'Excellence<br/>au Rasoir</h2>
+      <div class="section-line"></div>
+      <p>Depuis plus de 8 ans, Black & Sharp redéfinit les standards du barbier masculin à Paris. Chaque coupe est une œuvre, chaque client est unique.</p>
+      <p>Nos barbiers maîtrisent les techniques traditionnelles et contemporaines pour vous offrir un résultat impeccable, à chaque visite.</p>
+      <a href="#booking" class="btn-gold">Réserver maintenant</a>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery" id="gallery">
+    <p class="section-tag">Notre travail</p>
+    <h2 class="section-title">Galerie</h2>
+    <div class="section-line"></div>
+    <div class="gallery-grid">
+      <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=600" alt="Coupe 1"/>
+      <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=600" alt="Coupe 2"/>
+      <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=600" alt="Coupe 3"/>
+      <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=600" alt="Coupe 4"/>
+      <img src="https://images.unsplash.com/photo-1493256338651-d82f7acb2b38?w=600" alt="Coupe 5"/>
+      <img src="https://images.unsplash.com/photo-1560472355-109703aa3edc?w=600" alt="Coupe 6"/>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials">
+    <p class="section-tag">Ce qu'ils disent</p>
+    <h2 class="section-title">Avis Clients</h2>
+    <div class="section-line"></div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <p>"Meilleur barbier de Paris sans hésitation. Le pack premium est exceptionnel, je repars toujours transformé."</p>
+        <div class="testi-author">— Karim B.</div>
+      </div>
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <p>"L'ambiance est incroyable, les barbiers sont des artistes. Je recommande à tous mes amis."</p>
+        <div class="testi-author">— Thomas M.</div>
+      </div>
+      <div class="testi-card">
+        <div class="stars">★★★★★</div>
+        <p>"J'ai essayé beaucoup de barbiers à Paris, Black & Sharp est dans une autre dimension. Qualité premium."</p>
+        <div class="testi-author">— Yanis R.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKING -->
+  <section class="booking" id="booking">
+    <p class="section-tag">Disponible 7j/7</p>
+    <h2 class="section-title">Réserver une Séance</h2>
+    <div class="section-line"></div>
+    <form class="booking-form" onsubmit="handleBooking(event)">
+      <input type="text" placeholder="Votre prénom" required />
+      <input type="tel" placeholder="Votre téléphone" required />
+      <select required>
+        <option value="" disabled selected>Choisir un service</option>
+        <option>Coupe Signature — 25€</option>
+        <option>Rasage Traditionnel — 30€</option>
+        <option>Pack Premium — 55€</option>
+        <option>Taille de Barbe — 20€</option>
+      </select>
+      <input type="date" required />
+      <button type="submit" class="btn-gold" style="border:none;cursor:pointer;width:100%;">
+        Confirmer le Rendez-vous
+      </button>
+    </form>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Black & Sharp</div>
+    <div class="footer-info">
+      📍 <span>12 Rue du Faubourg Saint-Honoré, Paris 8ème</span><br/>
+      📞 <span>+33 1 23 45 67 89</span><br/>
+      🕐 Lun-Sam : 9h00 – 20h00 | Dim : 10h00 – 17h00
+    </div>
+    <div class="footer-copy">© 2025 Black & Sharp Barber. Tous droits réservés.</div>
+  </footer>
+
+  <script>
+    function handleBooking(e) {
+      e.preventDefault();
+      alert('Votre rendez-vous a été confirmé ! Nous vous contacterons sous 24h. 🫡');
+    }
+  </script>
+
+</body>
+</html>
