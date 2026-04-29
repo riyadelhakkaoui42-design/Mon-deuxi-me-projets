@@ -22,32 +22,6 @@
       color: var(--white);
       font-family: 'Poppins', sans-serif;
       scroll-behavior: smooth;
-      cursor: none;
-    }
-
-    /* CURSEUR CUSTOM */
-    .cursor {
-      position: fixed;
-      width: 12px;
-      height: 12px;
-      background: var(--gold);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: transform 0.1s ease;
-    }
-    .cursor-follower {
-      position: fixed;
-      width: 36px;
-      height: 36px;
-      border: 1px solid var(--gold);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9998;
-      transform: translate(-50%, -50%);
-      transition: all 0.15s ease;
-      opacity: 0.5;
     }
 
     /* PARTICULES */
@@ -512,10 +486,6 @@
 </head>
 <body>
 
-  <!-- CURSEUR -->
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-follower" id="cursor-follower"></div>
-
   <!-- PARTICULES -->
   <canvas id="particles-canvas"></canvas>
 
@@ -788,18 +758,6 @@
   </footer>
 
   <script>
-    /* CURSEUR CUSTOM */
-    var cursor = document.getElementById('cursor');
-    var follower = document.getElementById('cursor-follower');
-    document.addEventListener('mousemove', function(e) {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top = e.clientY + 'px';
-      setTimeout(function() {
-        follower.style.left = e.clientX + 'px';
-        follower.style.top = e.clientY + 'px';
-      }, 80);
-    });
-
     /* PARTICULES */
     var canvas = document.getElementById('particles-canvas');
     var ctx = canvas.getContext('2d');
