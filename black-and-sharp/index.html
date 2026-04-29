@@ -572,21 +572,8 @@
     <p class="section-tag">Disponible 7j/7</p>
     <h2 class="section-title">Réserver une Séance</h2>
     <div class="section-line"></div>
-    <form class="booking-form" onsubmit="handleBooking(event)">
-      <input type="text" placeholder="Votre prénom" required />
-      <input type="tel" placeholder="Votre téléphone" required />
-      <select required>
-        <option value="" disabled selected>Choisir un service</option>
-        <option>Coupe Signature — 25€</option>
-        <option>Rasage Traditionnel — 30€</option>
-        <option>Pack Premium — 55€</option>
-        <option>Taille de Barbe — 20€</option>
-      </select>
-      <input type="date" required />
-      <button type="submit" class="btn-gold" style="border:none;cursor:pointer;width:100%;">
-        Confirmer le Rendez-vous
-      </button>
-    </form>
+    <p style="color:#aaa;font-size:15px;margin-bottom:40px;">Choisissez votre créneau directement en ligne</p>
+    <div id="calendly-container" style="min-width:320px;max-width:700px;margin:0 auto;border-radius:8px;overflow:hidden;"></div>
   </section>
 
   <!-- FOOTER -->
@@ -600,11 +587,16 @@
     <div class="footer-copy">© 2025 Black & Sharp Barber. Tous droits réservés.</div>
   </footer>
 
+  <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
   <script>
-    function handleBooking(e) {
-      e.preventDefault();
-      alert('Votre rendez-vous a été confirmé ! Nous vous contacterons sous 24h. 🫡');
-    }
+    window.addEventListener('load', function() {
+      Calendly.initInlineWidget({
+        url: 'https://calendly.com/riyadelhakkaoui42/30min',
+        parentElement: document.getElementById('calendly-container'),
+        prefill: {},
+        utm: {}
+      });
+    });
   </script>
 
 </body>
