@@ -32,7 +32,7 @@
       width: 100%; height: 100%;
       pointer-events: none;
       z-index: 0;
-      opacity: 0.4;
+      opacity: 0.25;
     }
 
     /* TYPING EFFECT */
@@ -787,12 +787,21 @@
         alpha: Math.random() * 0.6 + 0.2
       });
     }
+    function getScrollColor() {
+      var scrollY = window.scrollY || window.pageYOffset;
+      var docH = document.body.scrollHeight - window.innerHeight;
+      var pct = scrollY / docH;
+      if(pct > 0.3 && pct < 0.75) return '255,255,255';
+      return '0,0,0';
+    }
+
     function animateParticles() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      var color = getScrollColor();
       particles.forEach(function(p) {
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(0,0,0,' + p.alpha + ')';
+        ctx.fillStyle = 'rgba(' + color + ',' + p.alpha + ')';
         ctx.fill();
         p.x += p.dx;
         p.y += p.dy;
