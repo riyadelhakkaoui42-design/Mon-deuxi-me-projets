@@ -568,12 +568,125 @@
   </section>
 
   <!-- BOOKING -->
-  <section class="booking" id="booking">
+  <section class="booking" id="booking" style="padding:100px 20px;">
     <p class="section-tag">Disponible 7j/7</p>
     <h2 class="section-title">Réserver une Séance</h2>
     <div class="section-line"></div>
     <p style="color:#aaa;font-size:15px;margin-bottom:40px;">Choisissez votre créneau directement en ligne</p>
-    <div id="calendly-container" style="width:100%;max-width:900px;margin:0 auto;border-radius:8px;overflow:hidden;border:1px solid #2a2a2a;height:700px;"></div>
+
+    <div style="width:100%;max-width:1000px;margin:0 auto;background:#111;border-radius:16px;border:1px solid #2a2a2a;overflow:hidden;box-shadow:0 0 60px rgba(201,168,76,0.08);">
+
+      <!-- Étapes -->
+      <div style="display:flex;border-bottom:1px solid #1e1e1e;">
+        <div class="booking-step active-step" id="step-tab-1" style="flex:1;padding:20px;text-align:center;cursor:pointer;border-right:1px solid #1e1e1e;transition:all 0.3s;">
+          <div style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);">01</div>
+          <div style="font-size:13px;font-weight:600;margin-top:4px;">Service</div>
+        </div>
+        <div class="booking-step" id="step-tab-2" style="flex:1;padding:20px;text-align:center;cursor:pointer;border-right:1px solid #1e1e1e;transition:all 0.3s;opacity:0.4;">
+          <div style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);">02</div>
+          <div style="font-size:13px;font-weight:600;margin-top:4px;">Date</div>
+        </div>
+        <div class="booking-step" id="step-tab-3" style="flex:1;padding:20px;text-align:center;cursor:pointer;border-right:1px solid #1e1e1e;transition:all 0.3s;opacity:0.4;">
+          <div style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);">03</div>
+          <div style="font-size:13px;font-weight:600;margin-top:4px;">Heure</div>
+        </div>
+        <div class="booking-step" id="step-tab-4" style="flex:1;padding:20px;text-align:center;cursor:pointer;transition:all 0.3s;opacity:0.4;">
+          <div style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);">04</div>
+          <div style="font-size:13px;font-weight:600;margin-top:4px;">Confirmation</div>
+        </div>
+      </div>
+
+      <!-- Contenu étapes -->
+      <div style="min-height:420px;padding:50px 40px;">
+
+        <!-- STEP 1 : Service -->
+        <div id="step-1">
+          <h3 style="font-family:'Playfair Display',serif;font-size:26px;margin-bottom:8px;">Choisissez votre service</h3>
+          <p style="color:#666;font-size:13px;margin-bottom:36px;">Sélectionnez une prestation pour continuer</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;">
+            <div class="svc-card" onclick="selectService(this,'Coupe Signature','25€')" style="border:1px solid #2a2a2a;border-radius:10px;padding:28px 20px;cursor:pointer;transition:all 0.3s;text-align:center;">
+              <div style="font-size:30px;margin-bottom:12px;">✂️</div>
+              <div style="font-weight:600;margin-bottom:6px;">Coupe Signature</div>
+              <div style="color:var(--gold);font-size:18px;font-weight:700;">25€</div>
+            </div>
+            <div class="svc-card" onclick="selectService(this,'Rasage Traditionnel','30€')" style="border:1px solid #2a2a2a;border-radius:10px;padding:28px 20px;cursor:pointer;transition:all 0.3s;text-align:center;">
+              <div style="font-size:30px;margin-bottom:12px;">🪒</div>
+              <div style="font-weight:600;margin-bottom:6px;">Rasage Traditionnel</div>
+              <div style="color:var(--gold);font-size:18px;font-weight:700;">30€</div>
+            </div>
+            <div class="svc-card" onclick="selectService(this,'Pack Premium','55€')" style="border:1px solid #2a2a2a;border-radius:10px;padding:28px 20px;cursor:pointer;transition:all 0.3s;text-align:center;">
+              <div style="font-size:30px;margin-bottom:12px;">👑</div>
+              <div style="font-weight:600;margin-bottom:6px;">Pack Premium</div>
+              <div style="color:var(--gold);font-size:18px;font-weight:700;">55€</div>
+            </div>
+            <div class="svc-card" onclick="selectService(this,'Taille de Barbe','20€')" style="border:1px solid #2a2a2a;border-radius:10px;padding:28px 20px;cursor:pointer;transition:all 0.3s;text-align:center;">
+              <div style="font-size:30px;margin-bottom:12px;">🧔</div>
+              <div style="font-weight:600;margin-bottom:6px;">Taille de Barbe</div>
+              <div style="color:var(--gold);font-size:18px;font-weight:700;">20€</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 2 : Date -->
+        <div id="step-2" style="display:none;">
+          <h3 style="font-family:'Playfair Display',serif;font-size:26px;margin-bottom:8px;">Choisissez une date</h3>
+          <p style="color:#666;font-size:13px;margin-bottom:36px;">Sélectionnez le jour de votre rendez-vous</p>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:10px;max-width:560px;">
+          </div>
+          <div id="date-grid" style="display:flex;flex-wrap:wrap;gap:10px;max-width:600px;"></div>
+          <div style="margin-top:36px;display:flex;justify-content:space-between;">
+            <button onclick="goStep(1)" style="background:transparent;border:1px solid #333;color:#aaa;padding:14px 30px;border-radius:6px;cursor:pointer;font-family:'Poppins',sans-serif;">← Retour</button>
+          </div>
+        </div>
+
+        <!-- STEP 3 : Heure -->
+        <div id="step-3" style="display:none;">
+          <h3 style="font-family:'Playfair Display',serif;font-size:26px;margin-bottom:8px;">Choisissez l'heure</h3>
+          <p style="color:#666;font-size:13px;margin-bottom:36px;">Créneaux disponibles pour la journée</p>
+          <div id="time-grid" style="display:flex;flex-wrap:wrap;gap:10px;max-width:600px;"></div>
+          <div style="margin-top:36px;display:flex;justify-content:space-between;">
+            <button onclick="goStep(2)" style="background:transparent;border:1px solid #333;color:#aaa;padding:14px 30px;border-radius:6px;cursor:pointer;font-family:'Poppins',sans-serif;">← Retour</button>
+          </div>
+        </div>
+
+        <!-- STEP 4 : Confirmation -->
+        <div id="step-4" style="display:none;">
+          <h3 style="font-family:'Playfair Display',serif;font-size:26px;margin-bottom:8px;">Confirmez votre réservation</h3>
+          <p style="color:#666;font-size:13px;margin-bottom:36px;">Entrez vos informations pour finaliser</p>
+          <div style="background:#0a0a0a;border:1px solid #222;border-radius:10px;padding:24px;margin-bottom:30px;max-width:500px;">
+            <div style="display:flex;justify-content:space-between;margin-bottom:12px;">
+              <span style="color:#666;font-size:13px;">Service</span>
+              <span id="confirm-service" style="font-weight:600;color:var(--gold);font-size:13px;"></span>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:12px;">
+              <span style="color:#666;font-size:13px;">Date</span>
+              <span id="confirm-date" style="font-weight:600;font-size:13px;"></span>
+            </div>
+            <div style="display:flex;justify-content:space-between;">
+              <span style="color:#666;font-size:13px;">Heure</span>
+              <span id="confirm-time" style="font-weight:600;font-size:13px;"></span>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:14px;max-width:500px;">
+            <input id="client-name" type="text" placeholder="Votre prénom" style="padding:16px 20px;background:#0a0a0a;border:1px solid #2a2a2a;border-radius:8px;color:#f5f5f5;font-family:'Poppins',sans-serif;font-size:14px;outline:none;" />
+            <input id="client-phone" type="tel" placeholder="Votre numéro de téléphone" style="padding:16px 20px;background:#0a0a0a;border:1px solid #2a2a2a;border-radius:8px;color:#f5f5f5;font-family:'Poppins',sans-serif;font-size:14px;outline:none;" />
+            <button onclick="confirmBooking()" style="background:var(--gold);color:#0a0a0a;border:none;padding:18px;border-radius:8px;font-family:'Poppins',sans-serif;font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;">Confirmer le Rendez-vous</button>
+          </div>
+          <div style="margin-top:20px;">
+            <button onclick="goStep(3)" style="background:transparent;border:1px solid #333;color:#aaa;padding:14px 30px;border-radius:6px;cursor:pointer;font-family:'Poppins',sans-serif;">← Retour</button>
+          </div>
+        </div>
+
+        <!-- STEP 5 : Succès -->
+        <div id="step-5" style="display:none;text-align:center;padding:40px 0;">
+          <div style="font-size:60px;margin-bottom:20px;">✅</div>
+          <h3 style="font-family:'Playfair Display',serif;font-size:30px;margin-bottom:12px;">Rendez-vous confirmé !</h3>
+          <p style="color:#aaa;font-size:15px;margin-bottom:30px;">Nous vous contacterons pour confirmer votre créneau.</p>
+          <div id="success-recap" style="background:#0a0a0a;border:1px solid #222;border-radius:10px;padding:24px;display:inline-block;text-align:left;min-width:280px;"></div>
+        </div>
+
+      </div>
+    </div>
   </section>
 
   <!-- FOOTER -->
@@ -587,15 +700,89 @@
     <div class="footer-copy">© 2025 Black & Sharp Barber. Tous droits réservés.</div>
   </footer>
 
-  <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
   <script>
-    window.addEventListener('load', function() {
-      Calendly.initInlineWidget({
-        url: 'https://calendly.com/riyadelhakkaoui42/30min?background_color=111111&text_color=f5f5f5&primary_color=c9a84c',
-        parentElement: document.getElementById('calendly-container'),
-        prefill: {},
-        utm: {}
+    var selectedService = '', selectedPrice = '', selectedDate = '', selectedTime = '';
+    var jours = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
+    var mois = ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
+    var heures = ['09:00','09:15','09:30','09:45','10:00','10:15','10:30','10:45','11:00','11:15','11:30','11:45','12:00','12:15','12:30','12:45','13:00','13:15','13:30','13:45','14:00','14:15','14:30','14:45','15:00','15:15','15:30','15:45','16:00','16:15','16:30','16:45','17:00','17:15','17:30','17:45','18:00','18:15','18:30','18:45','19:00','19:15','19:30','19:45'];
+
+    function goStep(n) {
+      for(var i=1;i<=5;i++) {
+        var el = document.getElementById('step-'+i);
+        if(el) el.style.display = i===n ? 'block' : 'none';
+        var tab = document.getElementById('step-tab-'+i);
+        if(tab) tab.style.opacity = i===n ? '1' : '0.4';
+      }
+      if(n===2) buildDateGrid();
+      if(n===3) buildTimeGrid();
+      if(n===4) {
+        document.getElementById('confirm-service').textContent = selectedService + ' — ' + selectedPrice;
+        document.getElementById('confirm-date').textContent = selectedDate;
+        document.getElementById('confirm-time').textContent = selectedTime;
+      }
+    }
+
+    function selectService(el, name, price) {
+      document.querySelectorAll('.svc-card').forEach(function(c){ c.style.border='1px solid #2a2a2a'; c.style.background='transparent'; });
+      el.style.border = '1px solid var(--gold)';
+      el.style.background = 'rgba(201,168,76,0.07)';
+      selectedService = name; selectedPrice = price;
+      setTimeout(function(){ goStep(2); }, 300);
+    }
+
+    function buildDateGrid() {
+      var grid = document.getElementById('date-grid');
+      grid.innerHTML = '';
+      var today = new Date();
+      for(var i=0;i<21;i++) {
+        var d = new Date(today); d.setDate(today.getDate()+i);
+        var btn = document.createElement('div');
+        btn.style.cssText = 'border:1px solid #2a2a2a;border-radius:10px;padding:14px 12px;cursor:pointer;text-align:center;min-width:72px;transition:all 0.2s;';
+        btn.innerHTML = '<div style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:1px;">'+jours[d.getDay()]+'</div><div style="font-size:20px;font-weight:700;margin:4px 0;">'+d.getDate()+'</div><div style="font-size:11px;color:#666;">'+mois[d.getMonth()]+'</div>';
+        btn.onclick = (function(date, el){
+          return function(){
+            document.querySelectorAll('#date-grid div').forEach(function(c){ c.style.border='1px solid #2a2a2a'; c.style.background='transparent'; });
+            el.style.border='1px solid var(--gold)'; el.style.background='rgba(201,168,76,0.07)';
+            selectedDate = jours[date.getDay()]+' '+date.getDate()+' '+mois[date.getMonth()];
+            setTimeout(function(){ goStep(3); }, 300);
+          };
+        })(d, btn);
+        grid.appendChild(btn);
+      }
+    }
+
+    function buildTimeGrid() {
+      var grid = document.getElementById('time-grid');
+      grid.innerHTML = '';
+      heures.forEach(function(h){
+        var btn = document.createElement('div');
+        btn.style.cssText = 'border:1px solid #2a2a2a;border-radius:8px;padding:14px 20px;cursor:pointer;font-size:14px;font-weight:600;transition:all 0.2s;min-width:90px;text-align:center;';
+        btn.textContent = h;
+        btn.onclick = function(){
+          document.querySelectorAll('#time-grid div').forEach(function(c){ c.style.border='1px solid #2a2a2a'; c.style.background='transparent'; c.style.color='#f5f5f5'; });
+          btn.style.border='1px solid var(--gold)'; btn.style.background='var(--gold)'; btn.style.color='#0a0a0a';
+          selectedTime = h;
+          setTimeout(function(){ goStep(4); }, 300);
+        };
+        grid.appendChild(btn);
       });
+    }
+
+    function confirmBooking() {
+      var name = document.getElementById('client-name').value.trim();
+      var phone = document.getElementById('client-phone').value.trim();
+      if(!name || !phone) { alert('Merci de remplir tous les champs !'); return; }
+      document.getElementById('success-recap').innerHTML =
+        '<div style="margin-bottom:10px;font-size:13px;color:#666;">Service : <span style="color:var(--gold);font-weight:600;">'+selectedService+'</span></div>'+
+        '<div style="margin-bottom:10px;font-size:13px;color:#666;">Date : <span style="color:#f5f5f5;font-weight:600;">'+selectedDate+'</span></div>'+
+        '<div style="margin-bottom:10px;font-size:13px;color:#666;">Heure : <span style="color:#f5f5f5;font-weight:600;">'+selectedTime+'</span></div>'+
+        '<div style="font-size:13px;color:#666;">Nom : <span style="color:#f5f5f5;font-weight:600;">'+name+'</span></div>';
+      goStep(5);
+    }
+
+    document.querySelectorAll('.svc-card').forEach(function(c){
+      c.addEventListener('mouseenter',function(){ if(c.style.border!=='1px solid var(--gold)') c.style.background='rgba(255,255,255,0.03)'; });
+      c.addEventListener('mouseleave',function(){ if(c.style.border!=='1px solid var(--gold)') c.style.background='transparent'; });
     });
   </script>
 
