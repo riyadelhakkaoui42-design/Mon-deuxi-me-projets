@@ -1,585 +1,816 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>WEBBYRIAS — Agence Web & Digitale</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <title>Black & Sharp — Barbershop Paris</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet"/>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { overflow-x: hidden; width: 100%; }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html, body { overflow-x:hidden; width:100%; scroll-behavior:smooth; }
 
     :root {
+      --black: #080808;
+      --white: #f5f5f0;
       --gold: #c9a84c;
-      --dark: #3a3a3a;
-      --dark2: #444444;
-      --dark3: #4f4f4f;
-      --white: #f5f5f5;
-      --gray: #aaa;
+      --gray: #888;
+      --light: #f0f0f0;
     }
 
     body {
-      background-color: var(--dark);
-      color: var(--white);
-      font-family: 'Poppins', sans-serif;
-      scroll-behavior: smooth;
+      background: var(--white);
+      color: var(--black);
+      font-family: 'Space Grotesk', sans-serif;
+      cursor: none;
     }
 
-    /* PARTICULES */
-    #particles-canvas {
+    /* CURSOR */
+    .cursor {
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      width: 10px; height: 10px;
+      background: var(--black);
+      border-radius: 50%;
       pointer-events: none;
-      z-index: 0;
-      opacity: 0.25;
+      z-index: 99999;
+      mix-blend-mode: difference;
+      transition: transform 0.1s;
+    }
+    .cursor-follower {
+      position: fixed;
+      width: 40px; height: 40px;
+      border: 1.5px solid var(--black);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 99998;
+      mix-blend-mode: difference;
+      transition: width 0.3s, height 0.3s;
     }
 
-    /* TYPING EFFECT */
-    .typing-cursor::after {
-      content: '|';
-      color: var(--gold);
-      animation: blink 0.8s infinite;
-    }
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
+    /* GRAIN */
+    body::after {
+      content:'';
+      position:fixed;
+      inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events:none;
+      z-index:9998;
+      opacity:0.5;
     }
 
     /* NAV */
     nav {
       position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px 60px;
-      background: rgba(58,58,58,0.97);
-      border-bottom: 1px solid #555;
+      top:0; left:0; right:0;
+      z-index:1000;
+      padding: 24px 60px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      mix-blend-mode: difference;
     }
-
     .logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 22px;
-      color: var(--gold);
-      letter-spacing: 2px;
+      font-family:'Bebas Neue',sans-serif;
+      font-size:22px;
+      letter-spacing:4px;
+      color: var(--white);
     }
-
-    .nav-links {
-      display: flex;
-      gap: 40px;
-      list-style: none;
-    }
-
+    .nav-links { display:flex; gap:36px; list-style:none; }
     .nav-links a {
       color: var(--white);
-      text-decoration: none;
-      font-size: 13px;
-      font-weight: 300;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      transition: color 0.3s;
+      text-decoration:none;
+      font-size:12px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      opacity:0.7;
+      transition:opacity 0.3s;
     }
-
-    .nav-links a:hover { color: var(--gold); }
-
-    .nav-btn {
-      background: var(--gold);
-      color: var(--dark) !important;
-      padding: 10px 24px;
-      font-weight: 600 !important;
-      border-radius: 2px;
-    }
+    .nav-links a:hover { opacity:1; }
 
     /* HERO */
     .hero {
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 0 20px;
-      background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
-        url('https://images.unsplash.com/photo-1716820110468-95e5cbfc93a0?w=1600&q=90') center/cover no-repeat;
+      position:relative;
+      height:100vh;
+      background: var(--black);
+      overflow:hidden;
+      display:flex;
+      align-items:flex-end;
+      padding: 0 60px 80px;
     }
-
-    .hero-content h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(42px, 8vw, 90px);
-      line-height: 1.1;
+    .hero-bg {
+      position:absolute;
+      inset:0;
+      background:url('https://images.unsplash.com/photo-1716820110468-95e5cbfc93a0?w=1600&q=90') center/cover;
+      opacity:0.35;
+      transform:scale(1.05);
+      transition:transform 8s ease;
+    }
+    .hero-bg.zoomed { transform:scale(1); }
+    .hero-content { position:relative; z-index:1; width:100%; }
+    .hero-tag {
+      font-size:11px;
+      letter-spacing:5px;
+      text-transform:uppercase;
+      color: var(--gold);
+      margin-bottom:24px;
+      opacity:0;
+      transform:translateY(20px);
+      animation: fadeUp 1s 0.3s forwards;
+    }
+    .hero-title {
+      font-family:'Bebas Neue',sans-serif;
+      font-size:clamp(80px, 15vw, 220px);
+      line-height:0.85;
       color: var(--white);
-      margin-bottom: 10px;
+      letter-spacing:-2px;
+      opacity:0;
+      transform:translateY(40px);
+      animation: fadeUp 1s 0.5s forwards;
     }
-
-    .hero-content h1 span { color: var(--gold); }
-
-    .hero-sub {
-      font-size: 13px;
-      letter-spacing: 6px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 30px;
+    .hero-title span { color: var(--gold); }
+    .hero-bottom {
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      margin-top:40px;
+      opacity:0;
+      transform:translateY(20px);
+      animation: fadeUp 1s 0.8s forwards;
     }
-
     .hero-desc {
-      font-size: 16px;
-      font-weight: 300;
-      color: #aaa;
-      max-width: 500px;
-      margin: 0 auto 40px;
-      line-height: 1.8;
+      font-size:14px;
+      font-weight:300;
+      color:rgba(255,255,255,0.5);
+      max-width:320px;
+      line-height:1.8;
+    }
+    .hero-cta {
+      display:flex;
+      gap:16px;
+      align-items:center;
+    }
+    .btn-dark {
+      padding:18px 40px;
+      background: var(--white);
+      color: var(--black);
+      border:none;
+      border-radius:0;
+      font-family:'Space Grotesk',sans-serif;
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:3px;
+      text-transform:uppercase;
+      text-decoration:none;
+      cursor:none;
+      transition:background 0.3s, color 0.3s;
+    }
+    .btn-dark:hover { background: var(--gold); }
+    .btn-outline-white {
+      padding:18px 40px;
+      background:transparent;
+      color: var(--white);
+      border:1px solid rgba(255,255,255,0.3);
+      font-family:'Space Grotesk',sans-serif;
+      font-size:12px;
+      font-weight:600;
+      letter-spacing:3px;
+      text-transform:uppercase;
+      text-decoration:none;
+      cursor:none;
+      transition:border-color 0.3s, color 0.3s;
+    }
+    .btn-outline-white:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* SCROLL LINE */
+    .scroll-hint {
+      position:absolute;
+      bottom:40px;
+      right:60px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:10px;
+      color:rgba(255,255,255,0.3);
+      font-size:10px;
+      letter-spacing:3px;
+      text-transform:uppercase;
+      opacity:0;
+      animation: fadeUp 1s 1.5s forwards;
+    }
+    .scroll-line-v {
+      width:1px;
+      height:50px;
+      background:linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);
+      animation: scrollDown 2s infinite;
+    }
+    @keyframes scrollDown {
+      0% { transform:scaleY(0); transform-origin:top; }
+      50% { transform:scaleY(1); transform-origin:top; }
+      51% { transform:scaleY(1); transform-origin:bottom; }
+      100% { transform:scaleY(0); transform-origin:bottom; }
     }
 
-    .btn-gold {
-      display: inline-block;
-      background: var(--gold);
-      color: var(--dark);
-      padding: 16px 40px;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      text-decoration: none;
-      border-radius: 2px;
-      transition: opacity 0.3s;
+    /* MARQUEE */
+    .marquee-wrap {
+      background: var(--black);
+      padding:20px 0;
+      overflow:hidden;
+      border-top:1px solid #111;
+      border-bottom:1px solid #111;
+    }
+    .marquee-track {
+      display:flex;
+      gap:60px;
+      animation:marquee 25s linear infinite;
+      white-space:nowrap;
+    }
+    .marquee-item {
+      font-family:'Bebas Neue',sans-serif;
+      font-size:14px;
+      letter-spacing:4px;
+      color:rgba(255,255,255,0.3);
+      display:flex;
+      align-items:center;
+      gap:60px;
+      flex-shrink:0;
+    }
+    .marquee-star { color: var(--gold); font-size:10px; }
+    @keyframes marquee {
+      from { transform:translateX(0); }
+      to { transform:translateX(-50%); }
     }
 
-    .btn-gold:hover { opacity: 0.85; }
-
-    .btn-outline {
-      display: inline-block;
-      border: 1px solid var(--gold);
-      color: var(--gold);
-      padding: 16px 40px;
-      font-size: 13px;
-      font-weight: 400;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      text-decoration: none;
-      border-radius: 2px;
-      margin-left: 16px;
-      transition: all 0.3s;
+    /* 3D CARD SECTION */
+    .scene-section {
+      background: var(--white);
+      padding:120px 60px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:80px;
+      overflow:hidden;
     }
-
-    .btn-outline:hover {
-      background: var(--gold);
-      color: var(--dark);
-    }
-
-    /* SECTION TITRE */
+    .scene-text { max-width:480px; }
     .section-tag {
-      font-size: 11px;
-      letter-spacing: 5px;
-      text-transform: uppercase;
+      font-size:11px;
+      letter-spacing:5px;
+      text-transform:uppercase;
       color: var(--gold);
-      margin-bottom: 12px;
+      margin-bottom:24px;
     }
-
     .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(30px, 5vw, 50px);
-      margin-bottom: 20px;
+      font-family:'Bebas Neue',sans-serif;
+      font-size:clamp(48px,7vw,96px);
+      line-height:1;
+      letter-spacing:-1px;
+      margin-bottom:30px;
     }
+    .section-desc {
+      font-size:15px;
+      font-weight:300;
+      color: var(--gray);
+      line-height:1.9;
+      margin-bottom:40px;
+    }
+    .btn-black {
+      display:inline-block;
+      padding:18px 40px;
+      background: var(--black);
+      color: var(--white);
+      text-decoration:none;
+      font-size:12px;
+      font-weight:700;
+      letter-spacing:3px;
+      text-transform:uppercase;
+      cursor:none;
+      transition:background 0.3s;
+    }
+    .btn-black:hover { background: var(--gold); color: var(--black); }
 
-    .section-line {
-      width: 50px;
-      height: 2px;
-      background: var(--gold);
-      margin: 0 auto 50px;
+    /* 3D CARD */
+    .card-3d-wrap {
+      flex-shrink:0;
+      width:380px;
+      height:500px;
+      perspective:1200px;
+    }
+    .card-3d {
+      width:100%;
+      height:100%;
+      position:relative;
+      transform-style:preserve-3d;
+      transition:transform 0.1s ease-out;
+    }
+    .card-3d-inner {
+      position:absolute;
+      inset:0;
+      background: var(--black);
+      border-radius:4px;
+      overflow:hidden;
+      backface-visibility:hidden;
+    }
+    .card-3d-inner img {
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      opacity:0.7;
+      transition:opacity 0.3s;
+    }
+    .card-3d-wrap:hover .card-3d-inner img { opacity:0.9; }
+    .card-3d-badge {
+      position:absolute;
+      bottom:30px;
+      left:30px;
+      right:30px;
+      background:rgba(0,0,0,0.8);
+      backdrop-filter:blur(10px);
+      padding:20px 24px;
+      border-left:2px solid var(--gold);
+    }
+    .card-3d-badge-title {
+      font-family:'Playfair Display',serif;
+      font-size:18px;
+      color: var(--white);
+      margin-bottom:6px;
+    }
+    .card-3d-badge-sub {
+      font-size:11px;
+      letter-spacing:2px;
+      color: var(--gold);
+      text-transform:uppercase;
+    }
+    /* 3D shine */
+    .card-3d-shine {
+      position:absolute;
+      inset:0;
+      background:radial-gradient(circle at 50% 50%, rgba(255,255,255,0.08), transparent 60%);
+      pointer-events:none;
+      border-radius:4px;
     }
 
     /* STATS */
-    .stats {
-      background: var(--dark2);
-      padding: 60px 40px;
-      display: flex;
-      justify-content: center;
-      gap: 80px;
-      flex-wrap: wrap;
-      border-top: 1px solid #1e1e1e;
-      border-bottom: 1px solid #1e1e1e;
+    .stats-section {
+      background: var(--black);
+      padding:100px 60px;
     }
-
-    .stat-item { text-align: center; }
-
-    .stat-number {
-      font-family: 'Playfair Display', serif;
-      font-size: 48px;
-      color: var(--gold);
+    .stats-grid {
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:1px;
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.06);
     }
-
-    .stat-label {
-      font-size: 12px;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--gray);
-      margin-top: 6px;
+    .stat-box {
+      background: var(--black);
+      padding:60px 40px;
+      text-align:center;
+      transition:background 0.3s;
     }
-
-    /* SERVICES */
-    .services {
-      padding: 100px 60px;
-      text-align: center;
-      background: var(--dark);
-    }
-
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 24px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .service-card {
-      background: var(--dark3);
-      border: 1px solid #222;
-      padding: 40px 30px;
-      border-radius: 4px;
-      transition: border-color 0.3s, transform 0.3s;
-    }
-
-    .service-card:hover {
-      border-color: var(--gold);
-      transform: translateY(-6px);
-    }
-
-    .service-icon {
-      font-size: 36px;
-      margin-bottom: 20px;
-    }
-
-    .service-card h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 20px;
-      margin-bottom: 10px;
+    .stat-box:hover { background:#111; }
+    .stat-num {
+      font-family:'Bebas Neue',sans-serif;
+      font-size:80px;
+      line-height:1;
       color: var(--white);
+      letter-spacing:-2px;
     }
-
-    .service-card p {
-      font-size: 13px;
+    .stat-num span { color: var(--gold); }
+    .stat-lbl {
+      font-size:12px;
+      letter-spacing:3px;
+      text-transform:uppercase;
       color: var(--gray);
-      line-height: 1.8;
-      margin-bottom: 20px;
-    }
-
-    .service-price {
-      font-size: 22px;
-      font-weight: 600;
-      color: var(--gold);
-    }
-
-    /* ABOUT */
-    .about {
-      padding: 100px 60px;
-      background: var(--dark2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 80px;
-      flex-wrap: wrap;
-    }
-
-    .about-img {
-      width: 400px;
-      height: 500px;
-      object-fit: cover;
-      border-radius: 4px;
-      border: 1px solid #222;
-      flex-shrink: 0;
-    }
-
-    .about-text { max-width: 480px; }
-    .about-text .section-line { margin: 0 0 30px; }
-
-    .about-text p {
-      font-size: 15px;
-      font-weight: 300;
-      color: #aaa;
-      line-height: 2;
-      margin-bottom: 20px;
+      margin-top:12px;
     }
 
     /* GALLERY */
     .gallery {
-      padding: 100px 60px;
-      text-align: center;
-      background: var(--dark);
+      background: var(--white);
+      padding:120px 60px;
     }
-
+    .gallery-header {
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      margin-bottom:60px;
+    }
     .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      max-width: 1000px;
-      margin: 0 auto;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+    }
+    .gallery-item {
+      position:relative;
+      overflow:hidden;
+      aspect-ratio:3/4;
+      background: var(--black);
+      cursor:none;
+    }
+    .gallery-item:first-child {
+      grid-row:span 2;
+      aspect-ratio:auto;
+    }
+    .gallery-item img {
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      filter:grayscale(20%);
+      transition:transform 0.7s cubic-bezier(0.23,1,0.32,1), filter 0.5s;
+    }
+    .gallery-item:hover img {
+      transform:scale(1.08);
+      filter:grayscale(0%);
+    }
+    .gallery-item-num {
+      position:absolute;
+      top:20px;
+      right:20px;
+      font-family:'Bebas Neue',sans-serif;
+      font-size:40px;
+      color:rgba(255,255,255,0.08);
+      pointer-events:none;
     }
 
-    .gallery-grid img {
-      width: 100%;
-      height: 280px;
-      object-fit: cover;
-      border-radius: 4px;
-      transition: transform 0.4s, opacity 0.4s;
+    /* 3D ROTATING CUBE */
+    .cube-section {
+      background: var(--black);
+      padding:140px 60px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:100px;
+      overflow:hidden;
     }
-
-    .gallery-grid img:hover {
-      transform: scale(1.03);
-      opacity: 0.85;
+    .cube-text { max-width:440px; color: var(--white); }
+    .cube-text .section-title { color: var(--white); }
+    .cube-text .section-desc { color:rgba(255,255,255,0.4); }
+    .cube-wrap {
+      width:220px;
+      height:220px;
+      perspective:800px;
+      flex-shrink:0;
     }
+    .cube {
+      width:100%;
+      height:100%;
+      position:relative;
+      transform-style:preserve-3d;
+      animation:rotateCube 12s linear infinite;
+    }
+    @keyframes rotateCube {
+      0% { transform:rotateX(15deg) rotateY(0deg); }
+      100% { transform:rotateX(15deg) rotateY(360deg); }
+    }
+    .cube-face {
+      position:absolute;
+      width:220px;
+      height:220px;
+      border:1px solid rgba(201,168,76,0.3);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-family:'Bebas Neue',sans-serif;
+      font-size:20px;
+      letter-spacing:3px;
+      color: var(--gold);
+      background:rgba(0,0,0,0.7);
+      backdrop-filter:blur(4px);
+    }
+    .cube-face.front  { transform:translateZ(110px); }
+    .cube-face.back   { transform:rotateY(180deg) translateZ(110px); }
+    .cube-face.left   { transform:rotateY(-90deg) translateZ(110px); }
+    .cube-face.right  { transform:rotateY(90deg) translateZ(110px); }
+    .cube-face.top    { transform:rotateX(90deg) translateZ(110px); }
+    .cube-face.bottom { transform:rotateX(-90deg) translateZ(110px); }
 
     /* TESTIMONIALS */
     .testimonials {
-      padding: 100px 60px;
-      background: var(--dark2);
-      text-align: center;
+      background: var(--white);
+      padding:120px 60px;
     }
-
     .testi-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-      max-width: 1000px;
-      margin: 0 auto;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:24px;
+      margin-top:60px;
     }
-
     .testi-card {
-      background: var(--dark3);
-      border: 1px solid #222;
-      padding: 36px 28px;
-      border-radius: 4px;
-      text-align: left;
+      padding:40px;
+      border:1px solid #e0e0e0;
+      transition:border-color 0.3s, transform 0.3s;
+      cursor:none;
     }
-
-    .stars { color: var(--gold); font-size: 16px; margin-bottom: 16px; }
-
+    .testi-card:hover {
+      border-color: var(--gold);
+      transform:translateY(-4px);
+    }
+    .stars { color: var(--gold); font-size:14px; margin-bottom:20px; letter-spacing:4px; }
     .testi-card p {
-      font-size: 14px;
-      color: #aaa;
-      line-height: 1.9;
-      margin-bottom: 20px;
-      font-style: italic;
+      font-size:15px;
+      font-weight:300;
+      line-height:1.9;
+      color:#444;
+      margin-bottom:24px;
     }
-
     .testi-author {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--gold);
-      letter-spacing: 1px;
+      font-size:12px;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      color: var(--gray);
     }
 
     /* BOOKING */
     .booking {
-      padding: 100px 60px;
-      text-align: center;
-      background: linear-gradient(rgba(0,0,0,0.80), rgba(0,0,0,0.80)),
-        url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1600&q=90') center/cover no-repeat;
+      background: var(--black);
+      padding:120px 60px;
     }
-
-    .booking-form {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      justify-content: center;
-      max-width: 700px;
-      margin: 0 auto;
+    .booking .section-tag { color: var(--gold); }
+    .booking .section-title { color: var(--white); }
+    .booking-box {
+      width:100%;
+      max-width:1000px;
+      margin:0 auto;
+      background:#0d0d0d;
+      border:1px solid #1e1e1e;
     }
-
-    .booking-form input,
-    .booking-form select {
-      flex: 1;
-      min-width: 200px;
-      padding: 16px 20px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid #333;
-      border-radius: 2px;
+    .booking-steps {
+      display:flex;
+      border-bottom:1px solid #1a1a1a;
+    }
+    .booking-step {
+      flex:1;
+      padding:22px 20px;
+      text-align:center;
+      cursor:none;
+      border-right:1px solid #1a1a1a;
+      transition:all 0.3s;
+      opacity:0.4;
+    }
+    .booking-step:last-child { border-right:none; }
+    .booking-step.active-step { opacity:1; border-bottom:2px solid var(--gold); }
+    .step-num {
+      font-size:10px;
+      letter-spacing:3px;
+      text-transform:uppercase;
+      color: var(--gold);
+    }
+    .step-name {
+      font-size:13px;
+      font-weight:600;
       color: var(--white);
-      font-family: 'Poppins', sans-serif;
-      font-size: 14px;
-      outline: none;
-      transition: border-color 0.3s;
+      margin-top:4px;
     }
+    .booking-content { min-height:420px; padding:50px 40px; }
+    .booking-content h3 {
+      font-family:'Playfair Display',serif;
+      font-size:26px;
+      color: var(--white);
+      margin-bottom:8px;
+    }
+    .booking-content > p { color:#555; font-size:13px; margin-bottom:36px; }
 
-    .booking-form input:focus,
-    .booking-form select:focus { border-color: var(--gold); }
-
-    .booking-form select option { background: var(--dark3); }
+    .svc-card {
+      border:1px solid #1e1e1e;
+      border-radius:0;
+      padding:28px 20px;
+      cursor:none;
+      transition:all 0.3s;
+      text-align:center;
+      position:relative;
+      background:transparent;
+    }
+    .svc-card:hover { border-color: var(--gold); background:rgba(201,168,76,0.04); }
 
     /* FOOTER */
     footer {
-      background: #111111;
-      padding: 60px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 30px;
-      border-top: 1px solid #222;
+      background: var(--black);
+      padding:60px;
+      border-top:1px solid #111;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+      gap:30px;
     }
-
     .footer-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 24px;
-      color: var(--gold);
+      font-family:'Bebas Neue',sans-serif;
+      font-size:24px;
+      letter-spacing:4px;
+      color: var(--white);
     }
-
-    .footer-info {
-      font-size: 13px;
-      color: var(--gray);
-      line-height: 2;
+    .footer-info { font-size:13px; color: var(--gray); line-height:2; }
+    .footer-copy { font-size:11px; color:#333; letter-spacing:2px; text-transform:uppercase; }
+    .footer-webbyrias {
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin-top:20px;
     }
+    .footer-webbyrias span { font-size:10px; color:#333; letter-spacing:2px; text-transform:uppercase; }
 
-    .footer-info span { color: var(--gold); }
-
-    .footer-copy {
-      font-size: 12px;
-      color: #444;
-      text-align: center;
-      width: 100%;
-      padding-top: 30px;
-      border-top: 1px solid #1a1a1a;
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      to { opacity:1; transform:translateY(0); }
     }
-
-    /* RESPONSIVE */
-    @media (max-width: 768px) {
-      nav { padding: 16px 24px; }
-      .nav-links { display: none; }
-      .hero-content h1 { font-size: 42px; }
-      .btn-outline { margin-left: 0; margin-top: 12px; display: block; text-align: center; }
-      .services, .gallery, .booking, .testimonials { padding: 60px 24px; }
-      .about { padding: 60px 24px; flex-direction: column; }
-      .about-img { width: 100%; height: 300px; }
-      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-      footer { padding: 40px 24px; flex-direction: column; text-align: center; }
-      .stats { gap: 40px; padding: 40px 20px; }
-    }
-    /* ANIMATIONS SCROLL */
     .reveal {
-      opacity: 0;
-      transform: translateY(60px);
-      transition: opacity 0.9s cubic-bezier(0.4,0,0.2,1), transform 0.9s cubic-bezier(0.4,0,0.2,1);
+      opacity:0;
+      transform:translateY(60px);
+      transition:opacity 1s cubic-bezier(0.23,1,0.32,1), transform 1s cubic-bezier(0.23,1,0.32,1);
     }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .reveal.visible { opacity:1; transform:translateY(0); }
     .reveal-left {
-      opacity: 0;
-      transform: translateX(-60px);
-      transition: opacity 0.9s cubic-bezier(0.4,0,0.2,1), transform 0.9s cubic-bezier(0.4,0,0.2,1);
+      opacity:0;
+      transform:translateX(-60px);
+      transition:opacity 1s cubic-bezier(0.23,1,0.32,1), transform 1s cubic-bezier(0.23,1,0.32,1);
     }
-    .reveal-left.visible {
-      opacity: 1;
-      transform: translateX(0);
-    }
+    .reveal-left.visible { opacity:1; transform:translateX(0); }
     .reveal-right {
-      opacity: 0;
-      transform: translateX(60px);
-      transition: opacity 0.9s cubic-bezier(0.4,0,0.2,1), transform 0.9s cubic-bezier(0.4,0,0.2,1);
+      opacity:0;
+      transform:translateX(60px);
+      transition:opacity 1s cubic-bezier(0.23,1,0.32,1), transform 1s cubic-bezier(0.23,1,0.32,1);
     }
-    .reveal-right.visible {
-      opacity: 1;
-      transform: translateX(0);
-    }
+    .reveal-right.visible { opacity:1; transform:translateX(0); }
+    .delay-1 { transition-delay:0.1s; }
+    .delay-2 { transition-delay:0.2s; }
+    .delay-3 { transition-delay:0.3s; }
+    .delay-4 { transition-delay:0.4s; }
 
+    @media(max-width:900px){
+      nav { padding:20px 24px; }
+      .nav-links { display:none; }
+      .hero { padding:0 24px 60px; }
+      .hero-bottom { flex-direction:column; align-items:flex-start; gap:24px; }
+      .scene-section { flex-direction:column; padding:80px 24px; }
+      .card-3d-wrap { width:100%; height:400px; }
+      .stats-section { padding:60px 24px; }
+      .stats-grid { grid-template-columns:repeat(2,1fr); }
+      .gallery { padding:80px 24px; }
+      .gallery-grid { grid-template-columns:1fr 1fr; }
+      .gallery-item:first-child { grid-row:span 1; }
+      .cube-section { flex-direction:column; padding:80px 24px; gap:60px; }
+      .testimonials { padding:80px 24px; }
+      .testi-grid { grid-template-columns:1fr; }
+      .booking { padding:80px 20px; }
+      .booking-content { padding:30px 20px; }
+      footer { padding:40px 24px; flex-direction:column; text-align:center; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- PARTICULES -->
-  <canvas id="particles-canvas"></canvas>
+  <!-- CURSOR -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursor-follower"></div>
 
   <!-- NAV -->
   <nav>
-    <div class="logo">WEBBYRIAS</div>
+    <div class="logo">BLACK & SHARP</div>
     <ul class="nav-links">
       <li><a href="#about">À Propos</a></li>
       <li><a href="#gallery">Galerie</a></li>
-      <li><a href="#booking" class="nav-btn">Réserver</a></li>
+      <li><a href="#booking">Réserver</a></li>
     </ul>
   </nav>
 
   <!-- HERO -->
   <section class="hero">
+    <div class="hero-bg" id="hero-bg"></div>
     <div class="hero-content">
-      <p class="hero-sub">Agence Web & Digitale — France</p>
-      <h1>WEBBY<br/><span>RIAS</span></h1>
-      <p class="hero-desc">On crée votre site web professionnel en 24h. Design premium, réservation intégrée, zéro prise de tête.</p>
-      <a href="#booking" class="btn-gold">Prendre Rendez-vous</a>
-      <a href="#gallery" class="btn-outline">Voir notre travail</a>
+      <p class="hero-tag">Paris 8ème — Depuis 2016</p>
+      <h1 class="hero-title">BLACK<br/>&amp; <span>SHARP</span></h1>
+      <div class="hero-bottom">
+        <p class="hero-desc">L'art du barbier traditionnel rencontre le design contemporain. Une expérience unique, à chaque visite.</p>
+        <div class="hero-cta">
+          <a href="#booking" class="btn-dark">Réserver</a>
+          <a href="#gallery" class="btn-outline-white">Notre travail</a>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <div class="scroll-line-v"></div>
+      Scroll
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <div class="marquee-item">BARBERSHOP <span class="marquee-star">✦</span> PARIS 8ÈME <span class="marquee-star">✦</span> COUPE SIGNATURE <span class="marquee-star">✦</span> RASAGE TRADITIONNEL <span class="marquee-star">✦</span> DEPUIS 2016 <span class="marquee-star">✦</span> BARBERSHOP <span class="marquee-star">✦</span> PARIS 8ÈME <span class="marquee-star">✦</span> COUPE SIGNATURE <span class="marquee-star">✦</span> RASAGE TRADITIONNEL <span class="marquee-star">✦</span> DEPUIS 2016 <span class="marquee-star">✦</span> BARBERSHOP <span class="marquee-star">✦</span> PARIS 8ÈME <span class="marquee-star">✦</span> COUPE SIGNATURE <span class="marquee-star">✦</span> RASAGE TRADITIONNEL <span class="marquee-star">✦</span> DEPUIS 2016 <span class="marquee-star">✦</span></div>
+    </div>
+  </div>
+
+  <!-- 3D CARD SECTION (ABOUT) -->
+  <section class="scene-section" id="about">
+    <div class="scene-text">
+      <p class="section-tag reveal">Notre histoire</p>
+      <h2 class="section-title reveal delay-1">L'EXCELLENCE<br/>AU RASOIR</h2>
+      <p class="section-desc reveal delay-2">Depuis plus de 8 ans, Black & Sharp redéfinit les standards du barbier masculin à Paris. Chaque coupe est une œuvre, chaque client est unique. Nos barbiers maîtrisent les techniques traditionnelles et contemporaines pour vous offrir un résultat impeccable, à chaque visite.</p>
+      <a href="#booking" class="btn-black reveal delay-3">Réserver maintenant</a>
+    </div>
+    <div class="card-3d-wrap reveal-right" id="card3d-wrap">
+      <div class="card-3d" id="card3d">
+        <div class="card-3d-inner">
+          <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=800&q=90" alt="Barbier"/>
+          <div class="card-3d-shine" id="card3d-shine"></div>
+          <div class="card-3d-badge">
+            <div class="card-3d-badge-title">L'Art du Barbier</div>
+            <div class="card-3d-badge-sub">Paris — Depuis 2016</div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- STATS -->
-  <div class="stats reveal">
-    <div class="stat-item">
-      <div class="stat-number" data-count="8">0</div>
-      <div class="stat-label">Années d'expérience</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number" data-count="3000">0</div>
-      <div class="stat-label">Clients satisfaits</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number">100%</div>
-      <div class="stat-label">Satisfaction client</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-number">5★</div>
-      <div class="stat-label">Note moyenne</div>
+  <div class="stats-section">
+    <div class="stats-grid reveal">
+      <div class="stat-box">
+        <div class="stat-num"><span data-count="8">0</span>+</div>
+        <div class="stat-lbl">Années d'expérience</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num"><span data-count="3000">0</span></div>
+        <div class="stat-lbl">Clients satisfaits</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">100<span style="color:var(--gold)">%</span></div>
+        <div class="stat-lbl">Satisfaction client</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">5<span style="color:var(--gold)">★</span></div>
+        <div class="stat-lbl">Note moyenne</div>
+      </div>
     </div>
   </div>
 
-  <!-- ABOUT -->
-  <section class="about" id="about" >
-    <img
-      class="about-img reveal-left"
-      src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=800&q=90"
-      alt="Notre salon"
-    />
-    <div class="about-text reveal-right">
-      <p class="section-tag">Notre histoire</p>
-      <h2 class="section-title">L'Excellence<br/>au Rasoir</h2>
-      <div class="section-line"></div>
-      <p>Depuis plus de 8 ans, Black & Sharp redéfinit les standards du barbier masculin à Paris. Chaque coupe est une œuvre, chaque client est unique.</p>
-      <p>Nos barbiers maîtrisent les techniques traditionnelles et contemporaines pour vous offrir un résultat impeccable, à chaque visite.</p>
-      <a href="#booking" class="btn-gold">Réserver maintenant</a>
+  <!-- GALLERY -->
+  <section class="gallery reveal" id="gallery">
+    <div class="gallery-header">
+      <div>
+        <p class="section-tag">Notre travail</p>
+        <h2 class="section-title">GALERIE</h2>
+      </div>
+      <a href="#booking" class="btn-black">Prendre RDV</a>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <div class="gallery-item-num">01</div>
+        <img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=800&q=90" alt="Coupe 1"/>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-item-num">02</div>
+        <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=600&q=90" alt="Coupe 2"/>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-item-num">03</div>
+        <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=600&q=90" alt="Coupe 3"/>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-item-num">04</div>
+        <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=600&q=90" alt="Coupe 4"/>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-item-num">05</div>
+        <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=600&q=90" alt="Coupe 5"/>
+      </div>
     </div>
   </section>
 
-  <!-- GALLERY -->
-  <section class="gallery reveal" id="gallery">
-    <p class="section-tag">Notre travail</p>
-    <h2 class="section-title">Galerie</h2>
-    <div class="section-line"></div>
-    <div class="gallery-grid">
-      <img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=600&q=90" alt="Coupe 1"/>
-      <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=600&q=90" alt="Coupe 2"/>
-      <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=600&q=90" alt="Coupe 3"/>
-      <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=600&q=90" alt="Coupe 4"/>
-      <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=600&q=90" alt="Coupe 5"/>
-      <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=600&q=90" alt="Coupe 6"/>
+  <!-- 3D CUBE SECTION -->
+  <section class="cube-section">
+    <div class="cube-text reveal-left">
+      <p class="section-tag">Nos services</p>
+      <h2 class="section-title">CHAQUE<br/>DÉTAIL<br/>COMPTE</h2>
+      <p class="section-desc" style="margin-top:24px;">Coupe signature, rasage traditionnel, taille de barbe, pack premium — chaque service est réalisé avec une précision absolue et des produits haut de gamme.</p>
+      <a href="#booking" class="btn-dark" style="display:inline-block;margin-top:32px;background:var(--gold);color:#000;">Voir les services</a>
+    </div>
+    <div class="cube-wrap reveal-right">
+      <div class="cube">
+        <div class="cube-face front">COUPE</div>
+        <div class="cube-face back">RASAGE</div>
+        <div class="cube-face left">BARBE</div>
+        <div class="cube-face right">SOIN</div>
+        <div class="cube-face top">STYLE</div>
+        <div class="cube-face bottom">ART</div>
+      </div>
     </div>
   </section>
 
   <!-- TESTIMONIALS -->
-  <section class="testimonials reveal">
-    <p class="section-tag">Ce qu'ils disent</p>
-    <h2 class="section-title">Avis Clients</h2>
-    <div class="section-line"></div>
+  <section class="testimonials" id="testimonials">
+    <p class="section-tag reveal">Ce qu'ils disent</p>
+    <h2 class="section-title reveal delay-1">AVIS CLIENTS</h2>
     <div class="testi-grid">
-      <div class="testi-card">
+      <div class="testi-card reveal delay-1">
         <div class="stars">★★★★★</div>
         <p>"Meilleur barbier de Paris sans hésitation. Le pack premium est exceptionnel, je repars toujours transformé."</p>
         <div class="testi-author">— Karim B.</div>
       </div>
-      <div class="testi-card">
+      <div class="testi-card reveal delay-2">
         <div class="stars">★★★★★</div>
         <p>"L'ambiance est incroyable, les barbiers sont des artistes. Je recommande à tous mes amis."</p>
         <div class="testi-author">— Thomas M.</div>
       </div>
-      <div class="testi-card">
+      <div class="testi-card reveal delay-3">
         <div class="stars">★★★★★</div>
         <p>"J'ai essayé beaucoup de barbiers à Paris, Black & Sharp est dans une autre dimension. Qualité premium."</p>
         <div class="testi-author">— Yanis R.</div>
@@ -588,129 +819,121 @@
   </section>
 
   <!-- BOOKING -->
-  <section class="booking" id="booking" style="padding:100px 20px;">
-    <p class="section-tag">Disponible 7j/7</p>
-    <h2 class="section-title">Réserver une Séance</h2>
-    <div class="section-line"></div>
-    <p style="color:#aaa;font-size:15px;margin-bottom:40px;">Choisissez votre créneau directement en ligne</p>
+  <section class="booking" id="booking">
+    <p class="section-tag reveal">Disponible 7j/7</p>
+    <h2 class="section-title reveal delay-1">RÉSERVER<br/>UNE SÉANCE</h2>
+    <p style="color:#555;font-size:14px;margin-bottom:40px;" class="reveal delay-2">Choisissez votre créneau directement en ligne</p>
 
-    <div style="width:100%;max-width:1000px;margin:0 auto;background:#111;border-radius:16px;border:1px solid #2a2a2a;overflow:hidden;box-shadow:0 0 60px rgba(201,168,76,0.08);">
-
-      <!-- Étapes -->
-      <div style="display:flex;border-bottom:1px solid #1e1e1e;">
-        <div class="booking-step active-step" id="step-tab-1" style="flex:1;padding:20px;text-align:center;cursor:pointer;border-right:1px solid #1e1e1e;transition:all 0.3s;">
-          <div style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);">01</div>
-          <div style="font-size:13px;font-weight:600;margin-top:4px;">Service</div>
+    <div class="booking-box reveal delay-3">
+      <div class="booking-steps">
+        <div class="booking-step active-step" id="step-tab-1">
+          <div class="step-num">01</div>
+          <div class="step-name">Service</div>
         </div>
-        <div class="booking-step" id="step-tab-2" style="flex:1;padding:20px;text-align:center;cursor:pointer;border-right:1px solid #1e1e1e;transition:all 0.3s;opacity:0.4;">
-          <div style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);">02</div>
-          <div style="font-size:13px;font-weight:600;margin-top:4px;">Date</div>
+        <div class="booking-step" id="step-tab-2" style="opacity:0.4;">
+          <div class="step-num">02</div>
+          <div class="step-name">Date</div>
         </div>
-        <div class="booking-step" id="step-tab-3" style="flex:1;padding:20px;text-align:center;cursor:pointer;border-right:1px solid #1e1e1e;transition:all 0.3s;opacity:0.4;">
-          <div style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);">03</div>
-          <div style="font-size:13px;font-weight:600;margin-top:4px;">Heure</div>
+        <div class="booking-step" id="step-tab-3" style="opacity:0.4;">
+          <div class="step-num">03</div>
+          <div class="step-name">Heure</div>
         </div>
-        <div class="booking-step" id="step-tab-4" style="flex:1;padding:20px;text-align:center;cursor:pointer;transition:all 0.3s;opacity:0.4;">
-          <div style="font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);">04</div>
-          <div style="font-size:13px;font-weight:600;margin-top:4px;">Confirmation</div>
+        <div class="booking-step" id="step-tab-4" style="opacity:0.4;">
+          <div class="step-num">04</div>
+          <div class="step-name">Confirmation</div>
         </div>
       </div>
 
-      <!-- Contenu étapes -->
-      <div style="min-height:420px;padding:50px 40px;">
+      <div class="booking-content">
 
-        <!-- STEP 1 : Service -->
+        <!-- STEP 1 -->
         <div id="step-1">
-          <h3 style="font-family:'Playfair Display',serif;font-size:26px;margin-bottom:8px;">Choisissez vos services</h3>
-          <p style="color:#666;font-size:13px;margin-bottom:36px;">Sélectionnez un ou plusieurs services</p>
-          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;">
-            <div class="svc-card" onclick="toggleService(this,'Coupe Signature',25)" style="border:1px solid #2a2a2a;border-radius:10px;padding:28px 20px;cursor:pointer;transition:all 0.3s;text-align:center;position:relative;">
-              <div style="font-size:30px;margin-bottom:12px;">✂️</div>
-              <div style="font-weight:600;margin-bottom:6px;">Coupe Signature</div>
+          <h3>Choisissez vos services</h3>
+          <p>Sélectionnez un ou plusieurs services</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;">
+            <div class="svc-card" onclick="toggleService(this,'Coupe Signature',25)">
+              <div style="font-size:28px;margin-bottom:12px;">✂️</div>
+              <div style="font-weight:600;color:#f5f5f5;margin-bottom:6px;">Coupe Signature</div>
               <div style="color:var(--gold);font-size:18px;font-weight:700;">25€</div>
-              <div class="check-badge" style="display:none;position:absolute;top:10px;right:10px;background:var(--gold);color:#000;border-radius:50%;width:22px;height:22px;font-size:12px;line-height:22px;">✓</div>
+              <div class="check-badge" style="display:none;position:absolute;top:10px;right:10px;background:var(--gold);color:#000;border-radius:50%;width:22px;height:22px;font-size:12px;line-height:22px;text-align:center;">✓</div>
             </div>
-            <div class="svc-card" onclick="toggleService(this,'Rasage Traditionnel',30)" style="border:1px solid #2a2a2a;border-radius:10px;padding:28px 20px;cursor:pointer;transition:all 0.3s;text-align:center;position:relative;">
-              <div style="font-size:30px;margin-bottom:12px;">🪒</div>
-              <div style="font-weight:600;margin-bottom:6px;">Rasage Traditionnel</div>
+            <div class="svc-card" onclick="toggleService(this,'Rasage Traditionnel',30)">
+              <div style="font-size:28px;margin-bottom:12px;">🪒</div>
+              <div style="font-weight:600;color:#f5f5f5;margin-bottom:6px;">Rasage Traditionnel</div>
               <div style="color:var(--gold);font-size:18px;font-weight:700;">30€</div>
-              <div class="check-badge" style="display:none;position:absolute;top:10px;right:10px;background:var(--gold);color:#000;border-radius:50%;width:22px;height:22px;font-size:12px;line-height:22px;">✓</div>
+              <div class="check-badge" style="display:none;position:absolute;top:10px;right:10px;background:var(--gold);color:#000;border-radius:50%;width:22px;height:22px;font-size:12px;line-height:22px;text-align:center;">✓</div>
             </div>
-            <div class="svc-card" onclick="toggleService(this,'Pack Premium',55)" style="border:1px solid #2a2a2a;border-radius:10px;padding:28px 20px;cursor:pointer;transition:all 0.3s;text-align:center;position:relative;">
-              <div style="font-size:30px;margin-bottom:12px;">👑</div>
-              <div style="font-weight:600;margin-bottom:6px;">Pack Premium</div>
+            <div class="svc-card" onclick="toggleService(this,'Pack Premium',55)">
+              <div style="font-size:28px;margin-bottom:12px;">👑</div>
+              <div style="font-weight:600;color:#f5f5f5;margin-bottom:6px;">Pack Premium</div>
               <div style="color:var(--gold);font-size:18px;font-weight:700;">55€</div>
-              <div class="check-badge" style="display:none;position:absolute;top:10px;right:10px;background:var(--gold);color:#000;border-radius:50%;width:22px;height:22px;font-size:12px;line-height:22px;">✓</div>
+              <div class="check-badge" style="display:none;position:absolute;top:10px;right:10px;background:var(--gold);color:#000;border-radius:50%;width:22px;height:22px;font-size:12px;line-height:22px;text-align:center;">✓</div>
             </div>
-            <div class="svc-card" onclick="toggleService(this,'Taille de Barbe',20)" style="border:1px solid #2a2a2a;border-radius:10px;padding:28px 20px;cursor:pointer;transition:all 0.3s;text-align:center;position:relative;">
-              <div style="font-size:30px;margin-bottom:12px;">🧔</div>
-              <div style="font-weight:600;margin-bottom:6px;">Taille de Barbe</div>
+            <div class="svc-card" onclick="toggleService(this,'Taille de Barbe',20)">
+              <div style="font-size:28px;margin-bottom:12px;">🧔</div>
+              <div style="font-weight:600;color:#f5f5f5;margin-bottom:6px;">Taille de Barbe</div>
               <div style="color:var(--gold);font-size:18px;font-weight:700;">20€</div>
-              <div class="check-badge" style="display:none;position:absolute;top:10px;right:10px;background:var(--gold);color:#000;border-radius:50%;width:22px;height:22px;font-size:12px;line-height:22px;">✓</div>
+              <div class="check-badge" style="display:none;position:absolute;top:10px;right:10px;background:var(--gold);color:#000;border-radius:50%;width:22px;height:22px;font-size:12px;line-height:22px;text-align:center;">✓</div>
             </div>
           </div>
-          <div style="margin-top:30px;display:flex;justify-content:space-between;align-items:center;">
-            <div id="total-display" style="color:var(--gold);font-size:18px;font-weight:700;"></div>
-            <button onclick="validateServices()" id="btn-next-services" style="display:none;background:var(--gold);color:#000;border:none;padding:16px 36px;border-radius:8px;font-family:'Poppins',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">Suivant →</button>
-          </div>
+          <div id="total-display" style="margin-top:24px;font-size:14px;color:var(--gold);font-weight:600;min-height:20px;"></div>
+          <button id="btn-next-services" onclick="validateServices()" style="display:none;margin-top:24px;padding:16px 40px;background:var(--gold);color:#000;border:none;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;cursor:none;">Continuer →</button>
         </div>
 
-        <!-- STEP 2 : Date -->
+        <!-- STEP 2 -->
         <div id="step-2" style="display:none;">
-          <h3 style="font-family:'Playfair Display',serif;font-size:26px;margin-bottom:8px;">Choisissez une date</h3>
-          <p style="color:#666;font-size:13px;margin-bottom:36px;">Sélectionnez le jour de votre rendez-vous</p>
-          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:10px;max-width:560px;">
-          </div>
+          <h3>Choisissez la date</h3>
+          <p>Les 21 prochains jours disponibles</p>
           <div id="date-grid" style="display:flex;flex-wrap:wrap;gap:10px;width:100%;"></div>
-          <div style="margin-top:36px;display:flex;justify-content:space-between;">
-            <button onclick="goStep(1)" style="background:transparent;border:1px solid #333;color:#aaa;padding:14px 30px;border-radius:6px;cursor:pointer;font-family:'Poppins',sans-serif;">← Retour</button>
+          <div style="margin-top:36px;">
+            <button onclick="goStep(1)" style="background:transparent;border:1px solid #222;color:#666;padding:14px 30px;font-family:'Space Grotesk',sans-serif;cursor:none;">← Retour</button>
           </div>
         </div>
 
-        <!-- STEP 3 : Heure -->
+        <!-- STEP 3 -->
         <div id="step-3" style="display:none;">
-          <h3 style="font-family:'Playfair Display',serif;font-size:26px;margin-bottom:8px;">Choisissez l'heure</h3>
-          <p style="color:#666;font-size:13px;margin-bottom:36px;">Créneaux disponibles pour la journée</p>
+          <h3>Choisissez l'heure</h3>
+          <p>Créneaux disponibles pour la journée</p>
           <div id="time-grid" style="display:flex;flex-wrap:wrap;gap:10px;width:100%;"></div>
-          <div style="margin-top:36px;display:flex;justify-content:space-between;">
-            <button onclick="goStep(2)" style="background:transparent;border:1px solid #333;color:#aaa;padding:14px 30px;border-radius:6px;cursor:pointer;font-family:'Poppins',sans-serif;">← Retour</button>
+          <div style="margin-top:36px;">
+            <button onclick="goStep(2)" style="background:transparent;border:1px solid #222;color:#666;padding:14px 30px;font-family:'Space Grotesk',sans-serif;cursor:none;">← Retour</button>
           </div>
         </div>
 
-        <!-- STEP 4 : Confirmation -->
+        <!-- STEP 4 -->
         <div id="step-4" style="display:none;">
-          <h3 style="font-family:'Playfair Display',serif;font-size:26px;margin-bottom:8px;">Confirmez votre réservation</h3>
-          <p style="color:#666;font-size:13px;margin-bottom:36px;">Entrez vos informations pour finaliser</p>
-          <div style="background:#0a0a0a;border:1px solid #222;border-radius:10px;padding:24px;margin-bottom:30px;max-width:500px;">
+          <h3>Confirmez votre réservation</h3>
+          <p>Entrez vos informations pour finaliser</p>
+          <div style="background:#0a0a0a;border:1px solid #1a1a1a;border-left:2px solid var(--gold);padding:24px;margin-bottom:30px;max-width:500px;">
             <div style="display:flex;justify-content:space-between;margin-bottom:12px;">
-              <span style="color:#666;font-size:13px;">Service</span>
+              <span style="color:#555;font-size:13px;">Service</span>
               <span id="confirm-service" style="font-weight:600;color:var(--gold);font-size:13px;"></span>
             </div>
             <div style="display:flex;justify-content:space-between;margin-bottom:12px;">
-              <span style="color:#666;font-size:13px;">Date</span>
-              <span id="confirm-date" style="font-weight:600;font-size:13px;"></span>
+              <span style="color:#555;font-size:13px;">Date</span>
+              <span id="confirm-date" style="font-weight:600;color:#f5f5f5;font-size:13px;"></span>
             </div>
             <div style="display:flex;justify-content:space-between;">
-              <span style="color:#666;font-size:13px;">Heure</span>
-              <span id="confirm-time" style="font-weight:600;font-size:13px;"></span>
+              <span style="color:#555;font-size:13px;">Heure</span>
+              <span id="confirm-time" style="font-weight:600;color:#f5f5f5;font-size:13px;"></span>
             </div>
           </div>
-          <div style="display:flex;flex-direction:column;gap:14px;max-width:500px;">
-            <input id="client-name" type="text" placeholder="Votre prénom" style="padding:16px 20px;background:#0a0a0a;border:1px solid #2a2a2a;border-radius:8px;color:#f5f5f5;font-family:'Poppins',sans-serif;font-size:14px;outline:none;" />
-            <input id="client-phone" type="tel" placeholder="Votre numéro de téléphone" style="padding:16px 20px;background:#0a0a0a;border:1px solid #2a2a2a;border-radius:8px;color:#f5f5f5;font-family:'Poppins',sans-serif;font-size:14px;outline:none;" />
-            <button onclick="confirmBooking()" style="background:var(--gold);color:#0a0a0a;border:none;padding:18px;border-radius:8px;font-family:'Poppins',sans-serif;font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;cursor:pointer;">Confirmer le Rendez-vous</button>
+          <div style="display:flex;flex-direction:column;gap:12px;max-width:500px;">
+            <input id="client-name" type="text" placeholder="Votre prénom" style="padding:16px 20px;background:#0a0a0a;border:1px solid #1e1e1e;border-bottom:1px solid #333;color:#f5f5f5;font-family:'Space Grotesk',sans-serif;font-size:14px;outline:none;"/>
+            <input id="client-phone" type="tel" placeholder="Votre numéro de téléphone" style="padding:16px 20px;background:#0a0a0a;border:1px solid #1e1e1e;border-bottom:1px solid #333;color:#f5f5f5;font-family:'Space Grotesk',sans-serif;font-size:14px;outline:none;"/>
+            <button onclick="confirmBooking()" style="background:var(--gold);color:#000;border:none;padding:18px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;cursor:none;">Confirmer le Rendez-vous</button>
           </div>
           <div style="margin-top:20px;">
-            <button onclick="goStep(3)" style="background:transparent;border:1px solid #333;color:#aaa;padding:14px 30px;border-radius:6px;cursor:pointer;font-family:'Poppins',sans-serif;">← Retour</button>
+            <button onclick="goStep(3)" style="background:transparent;border:1px solid #222;color:#666;padding:14px 30px;font-family:'Space Grotesk',sans-serif;cursor:none;">← Retour</button>
           </div>
         </div>
 
-        <!-- STEP 5 : Succès -->
+        <!-- STEP 5 -->
         <div id="step-5" style="display:none;text-align:center;padding:40px 0;">
           <div style="font-size:60px;margin-bottom:20px;">✅</div>
           <h3 style="font-family:'Playfair Display',serif;font-size:30px;margin-bottom:12px;">Rendez-vous confirmé !</h3>
-          <p style="color:#aaa;font-size:15px;margin-bottom:30px;">Nous vous contacterons pour confirmer votre créneau.</p>
-          <div id="success-recap" style="background:#0a0a0a;border:1px solid #222;border-radius:10px;padding:24px;display:inline-block;text-align:left;min-width:280px;"></div>
+          <p style="color:#555;font-size:15px;margin-bottom:30px;">Nous vous contacterons pour confirmer votre créneau.</p>
+          <div id="success-recap" style="background:#0a0a0a;border:1px solid #1a1a1a;border-left:2px solid var(--gold);padding:24px;display:inline-block;text-align:left;min-width:280px;"></div>
         </div>
 
       </div>
@@ -719,211 +942,169 @@
 
   <!-- FOOTER -->
   <footer>
-    <div class="footer-logo">WEBBYRIAS</div>
+    <div>
+      <div class="footer-logo">BLACK & SHARP</div>
+      <div class="footer-webbyrias">
+        <span>Site créé par</span>
+        <img src="https://i.postimg.cc/1thWrvtv/IMG-0033.png" alt="WEBBYRIAS" style="height:28px;opacity:0.5;filter:invert(1);"/>
+      </div>
+    </div>
     <div class="footer-info">
-      📍 <span>12 Rue du Faubourg Saint-Honoré, Paris 8ème</span><br/>
-      📞 <span>+33 1 23 45 67 89</span><br/>
-      🕐 Lun-Sam : 9h00 – 20h00 | Dim : 10h00 – 17h00
+      📍 12 Rue du Faubourg Saint-Honoré, Paris 8ème<br/>
+      📞 +33 1 23 45 67 89<br/>
+      🕐 Lun-Sam : 9h – 20h | Dim : 10h – 17h
     </div>
-    <div class="footer-copy">© 2025 WEBBYRIAS. Tous droits réservés.</div>
-    <div class="footer-copy" style="margin-top:16px;display:flex;align-items:center;justify-content:center;gap:10px;">
-      <span style="color:#333;font-size:11px;letter-spacing:2px;text-transform:uppercase;">Site créé par</span>
-      <img src="https://i.postimg.cc/1thWrvtv/IMG-0033.png" alt="WEBBYRIAS" style="height:32px;opacity:0.7;filter:brightness(0.9);"/>
-    </div>
+    <div class="footer-copy">© 2025 Black & Sharp.<br/>Tous droits réservés.</div>
   </footer>
 
   <script>
-    /* PARTICULES */
-    var canvas = document.getElementById('particles-canvas');
-    var ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    window.addEventListener('resize', function() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+    /* CURSOR */
+    var cur = document.getElementById('cursor');
+    var fol = document.getElementById('cursor-follower');
+    var mx=0,my=0,fx=0,fy=0;
+    document.addEventListener('mousemove',function(e){
+      mx=e.clientX; my=e.clientY;
+      cur.style.left=mx-5+'px'; cur.style.top=my-5+'px';
     });
-    var particles = [];
-    for(var i = 0; i < 60; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        r: Math.random() * 2 + 0.5,
-        dx: (Math.random() - 0.5) * 0.4,
-        dy: (Math.random() - 0.5) * 0.4,
-        alpha: Math.random() * 0.6 + 0.2
+    (function animFol(){
+      fx+=(mx-fx-20)*0.12; fy+=(my-fy-20)*0.12;
+      fol.style.left=fx+'px'; fol.style.top=fy+'px';
+      requestAnimationFrame(animFol);
+    })();
+    document.querySelectorAll('a,button,.gallery-item,.testi-card,.svc-card').forEach(function(el){
+      el.addEventListener('mouseenter',function(){ fol.style.width='60px'; fol.style.height='60px'; });
+      el.addEventListener('mouseleave',function(){ fol.style.width='40px'; fol.style.height='40px'; });
+    });
+
+    /* HERO BG ZOOM */
+    setTimeout(function(){ document.getElementById('hero-bg').classList.add('zoomed'); }, 100);
+
+    /* 3D CARD TILT */
+    var wrap = document.getElementById('card3d-wrap');
+    var card = document.getElementById('card3d');
+    var shine = document.getElementById('card3d-shine');
+    if(wrap){
+      wrap.addEventListener('mousemove',function(e){
+        var r = wrap.getBoundingClientRect();
+        var x = (e.clientX-r.left)/r.width - 0.5;
+        var y = (e.clientY-r.top)/r.height - 0.5;
+        card.style.transform = 'rotateY('+(x*20)+'deg) rotateX('+(-y*20)+'deg)';
+        shine.style.background = 'radial-gradient(circle at '+(x*100+50)+'% '+(y*100+50)+'%, rgba(255,255,255,0.12), transparent 60%)';
+      });
+      wrap.addEventListener('mouseleave',function(){
+        card.style.transform = 'rotateY(0deg) rotateX(0deg)';
+        shine.style.background = 'radial-gradient(circle at 50% 50%, rgba(255,255,255,0.06), transparent 60%)';
       });
     }
-    function getScrollColor() {
-      return '255,255,255';
-    }
 
-    function animateParticles() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      var color = getScrollColor();
-      particles.forEach(function(p) {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(' + color + ',' + p.alpha + ')';
-        ctx.fill();
-        p.x += p.dx;
-        p.y += p.dy;
-        if(p.x < 0 || p.x > canvas.width) p.dx *= -1;
-        if(p.y < 0 || p.y > canvas.height) p.dy *= -1;
-      });
-      requestAnimationFrame(animateParticles);
-    }
-    animateParticles();
-
-    /* COMPTEURS ANIMÉS */
-    function animateCounter(el, target) {
-      var start = 0;
-      var duration = 2000;
-      var step = target / (duration / 16);
-      var timer = setInterval(function() {
-        start += step;
-        if(start >= target) {
-          start = target;
-          clearInterval(timer);
-          el.textContent = target >= 1000 ? Math.round(target/1000) + 'K+' : target + '+';
-        } else {
-          el.textContent = target >= 1000 ? Math.round(start/1000) + 'K' : Math.round(start);
-        }
-      }, 16);
-    }
-
-    /* Scroll animations */
-    var observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if(entry.isIntersecting) {
+    /* SCROLL REVEAL */
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
           entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.15 });
-
-    var scrollObserver = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if(entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          var counters = entry.target.querySelectorAll('[data-count]');
-          counters.forEach(function(counter) {
-            animateCounter(counter, parseInt(counter.getAttribute('data-count')));
+          entry.target.querySelectorAll('[data-count]').forEach(function(el){
+            var target=parseInt(el.getAttribute('data-count'));
+            var start=0; var step=target/(2000/16);
+            var t=setInterval(function(){
+              start+=step;
+              if(start>=target){ start=target; clearInterval(t); el.textContent=target>=1000?Math.round(target/1000)+'K+':target+'+'; }
+              else { el.textContent=target>=1000?Math.round(start/1000)+'K':Math.round(start); }
+            },16);
           });
-          scrollObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.2, rootMargin: '0px 0px -80px 0px' });
+    },{threshold:0.15,rootMargin:'0px 0px -60px 0px'});
+    document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(function(el){ observer.observe(el); });
 
-    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(function(el) {
-      scrollObserver.observe(el);
-    });
+    /* BOOKING */
+    var selectedServices=[],selectedDate='',selectedTime='';
+    var jours=['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
+    var mois=['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
+    var heures=['09:00','09:15','09:30','09:45','10:00','10:15','10:30','10:45','11:00','11:15','11:30','11:45','12:00','12:15','12:30','12:45','13:00','13:15','13:30','13:45','14:00','14:15','14:30','14:45','15:00','15:15','15:30','15:45','16:00','16:15','16:30','16:45','17:00','17:15','17:30','17:45','18:00','18:15','18:30','18:45','19:00','19:15','19:30','19:45'];
 
-    var selectedServices = [], selectedDate = '', selectedTime = '';
-
-    function toggleService(el, name, price) {
-      var idx = selectedServices.findIndex(function(s){ return s.name === name; });
-      if(idx > -1) {
-        selectedServices.splice(idx, 1);
-        el.style.border = '1px solid #2a2a2a';
-        el.style.background = 'transparent';
-        el.querySelector('.check-badge').style.display = 'none';
+    function toggleService(el,name,price){
+      var idx=selectedServices.findIndex(function(s){return s.name===name;});
+      if(idx>-1){
+        selectedServices.splice(idx,1);
+        el.style.border='1px solid #1e1e1e'; el.style.background='transparent';
+        el.querySelector('.check-badge').style.display='none';
       } else {
-        selectedServices.push({ name: name, price: price });
-        el.style.border = '1px solid var(--gold)';
-        el.style.background = 'rgba(201,168,76,0.07)';
-        el.querySelector('.check-badge').style.display = 'block';
+        selectedServices.push({name:name,price:price});
+        el.style.border='1px solid var(--gold)'; el.style.background='rgba(201,168,76,0.06)';
+        el.querySelector('.check-badge').style.display='block';
       }
-      var total = selectedServices.reduce(function(sum, s){ return sum + s.price; }, 0);
-      var display = document.getElementById('total-display');
-      var btn = document.getElementById('btn-next-services');
-      if(selectedServices.length > 0) {
-        display.textContent = selectedServices.map(function(s){ return s.name; }).join(' + ') + ' — ' + total + '€';
-        btn.style.display = 'block';
-      } else {
-        display.textContent = '';
-        btn.style.display = 'none';
-      }
+      var total=selectedServices.reduce(function(s,x){return s+x.price;},0);
+      var disp=document.getElementById('total-display');
+      var btn=document.getElementById('btn-next-services');
+      if(selectedServices.length>0){
+        disp.textContent=selectedServices.map(function(s){return s.name;}).join(' + ')+' — '+total+'€';
+        btn.style.display='block';
+      } else { disp.textContent=''; btn.style.display='none'; }
     }
 
-    function validateServices() {
-      if(selectedServices.length === 0) return;
-      goStep(2);
-    }
-    var jours = ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'];
-    var mois = ['Jan','Fév','Mar','Avr','Mai','Jun','Jul','Aoû','Sep','Oct','Nov','Déc'];
-    var heures = ['09:00','09:15','09:30','09:45','10:00','10:15','10:30','10:45','11:00','11:15','11:30','11:45','12:00','12:15','12:30','12:45','13:00','13:15','13:30','13:45','14:00','14:15','14:30','14:45','15:00','15:15','15:30','15:45','16:00','16:15','16:30','16:45','17:00','17:15','17:30','17:45','18:00','18:15','18:30','18:45','19:00','19:15','19:30','19:45'];
+    function validateServices(){ if(selectedServices.length===0)return; goStep(2); }
 
-    function goStep(n) {
-      for(var i=1;i<=5;i++) {
-        var el = document.getElementById('step-'+i);
-        if(el) el.style.display = i===n ? 'block' : 'none';
-        var tab = document.getElementById('step-tab-'+i);
-        if(tab) tab.style.opacity = i===n ? '1' : '0.4';
+    function goStep(n){
+      for(var i=1;i<=5;i++){
+        var el=document.getElementById('step-'+i); if(el) el.style.display=i===n?'block':'none';
+        var tab=document.getElementById('step-tab-'+i);
+        if(tab){ tab.style.opacity=i===n?'1':'0.4'; tab.classList.toggle('active-step',i===n); }
       }
       if(n===2) buildDateGrid();
       if(n===3) buildTimeGrid();
-      if(n===4) {
-        var total = selectedServices.reduce(function(sum,s){ return sum+s.price; },0);
-        document.getElementById('confirm-service').textContent = selectedServices.map(function(s){ return s.name; }).join(' + ') + ' — ' + total + '€';
-        document.getElementById('confirm-date').textContent = selectedDate;
-        document.getElementById('confirm-time').textContent = selectedTime;
+      if(n===4){
+        var total=selectedServices.reduce(function(s,x){return s+x.price;},0);
+        document.getElementById('confirm-service').textContent=selectedServices.map(function(s){return s.name;}).join(' + ')+' — '+total+'€';
+        document.getElementById('confirm-date').textContent=selectedDate;
+        document.getElementById('confirm-time').textContent=selectedTime;
       }
     }
 
-
-    function buildDateGrid() {
-      var grid = document.getElementById('date-grid');
-      grid.innerHTML = '';
-      var today = new Date();
-      for(var i=0;i<21;i++) {
-        var d = new Date(today); d.setDate(today.getDate()+i);
-        var btn = document.createElement('div');
-        btn.style.cssText = 'border:1px solid #444;border-radius:10px;padding:14px 12px;cursor:pointer;text-align:center;min-width:72px;transition:all 0.2s;color:#ffffff;background:rgba(255,255,255,0.08);';
-        btn.innerHTML = '<div style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:1px;">'+jours[d.getDay()]+'</div><div style="font-size:20px;font-weight:700;margin:4px 0;">'+d.getDate()+'</div><div style="font-size:11px;color:#666;">'+mois[d.getMonth()]+'</div>';
-        btn.onclick = (function(date, el){
-          return function(){
-            document.querySelectorAll('#date-grid div').forEach(function(c){ c.style.border='1px solid #2a2a2a'; c.style.background='transparent'; });
-            el.style.border='1px solid var(--gold)'; el.style.background='rgba(201,168,76,0.07)';
-            selectedDate = jours[date.getDay()]+' '+date.getDate()+' '+mois[date.getMonth()];
-            setTimeout(function(){ goStep(3); }, 300);
-          };
-        })(d, btn);
+    function buildDateGrid(){
+      var grid=document.getElementById('date-grid'); grid.innerHTML='';
+      var today=new Date();
+      for(var i=0;i<21;i++){
+        var d=new Date(today); d.setDate(today.getDate()+i);
+        var btn=document.createElement('div');
+        btn.style.cssText='border:1px solid #1e1e1e;padding:14px 12px;cursor:none;text-align:center;min-width:72px;transition:all 0.2s;color:#f5f5f5;background:rgba(255,255,255,0.04);';
+        btn.innerHTML='<div style="font-size:10px;color:#555;text-transform:uppercase;letter-spacing:1px;">'+jours[d.getDay()]+'</div><div style="font-size:20px;font-weight:700;margin:4px 0;color:#f5f5f5;">'+d.getDate()+'</div><div style="font-size:10px;color:#555;">'+mois[d.getMonth()]+'</div>';
+        btn.onclick=(function(date,el){return function(){
+          document.querySelectorAll('#date-grid div').forEach(function(c){c.style.border='1px solid #1e1e1e';c.style.background='rgba(255,255,255,0.04)';});
+          el.style.border='1px solid var(--gold)'; el.style.background='rgba(201,168,76,0.08)';
+          selectedDate=jours[date.getDay()]+' '+date.getDate()+' '+mois[date.getMonth()];
+          setTimeout(function(){goStep(3);},300);
+        };})(d,btn);
         grid.appendChild(btn);
       }
     }
 
-    function buildTimeGrid() {
-      var grid = document.getElementById('time-grid');
-      grid.innerHTML = '';
+    function buildTimeGrid(){
+      var grid=document.getElementById('time-grid'); grid.innerHTML='';
       heures.forEach(function(h){
-        var btn = document.createElement('div');
-        btn.style.cssText = 'border:1px solid #444;border-radius:8px;padding:14px 20px;cursor:pointer;font-size:14px;font-weight:600;transition:all 0.2s;min-width:90px;text-align:center;color:#ffffff;background:rgba(255,255,255,0.08);';
-        btn.textContent = h;
-        btn.onclick = function(){
-          document.querySelectorAll('#time-grid div').forEach(function(c){ c.style.border='1px solid #2a2a2a'; c.style.background='transparent'; c.style.color='#f5f5f5'; });
-          btn.style.border='1px solid var(--gold)'; btn.style.background='var(--gold)'; btn.style.color='#0a0a0a';
-          selectedTime = h;
-          setTimeout(function(){ goStep(4); }, 300);
+        var btn=document.createElement('div');
+        btn.style.cssText='border:1px solid #1e1e1e;padding:14px 20px;cursor:none;font-size:14px;font-weight:600;transition:all 0.2s;min-width:90px;text-align:center;color:#f5f5f5;background:rgba(255,255,255,0.04);';
+        btn.textContent=h;
+        btn.onclick=function(){
+          document.querySelectorAll('#time-grid div').forEach(function(c){c.style.border='1px solid #1e1e1e';c.style.background='rgba(255,255,255,0.04)';c.style.color='#f5f5f5';});
+          btn.style.border='1px solid var(--gold)'; btn.style.background='var(--gold)'; btn.style.color='#000';
+          selectedTime=h; setTimeout(function(){goStep(4);},300);
         };
         grid.appendChild(btn);
       });
     }
 
-    function confirmBooking() {
-      var name = document.getElementById('client-name').value.trim();
-      var phone = document.getElementById('client-phone').value.trim();
-      if(!name || !phone) { alert('Merci de remplir tous les champs !'); return; }
-      document.getElementById('success-recap').innerHTML =
-        '<div style="margin-bottom:10px;font-size:13px;color:#666;">Service : <span style="color:var(--gold);font-weight:600;">'+selectedService+'</span></div>'+
-        '<div style="margin-bottom:10px;font-size:13px;color:#666;">Date : <span style="color:#f5f5f5;font-weight:600;">'+selectedDate+'</span></div>'+
-        '<div style="margin-bottom:10px;font-size:13px;color:#666;">Heure : <span style="color:#f5f5f5;font-weight:600;">'+selectedTime+'</span></div>'+
-        '<div style="font-size:13px;color:#666;">Nom : <span style="color:#f5f5f5;font-weight:600;">'+name+'</span></div>';
+    function confirmBooking(){
+      var name=document.getElementById('client-name').value.trim();
+      var phone=document.getElementById('client-phone').value.trim();
+      if(!name||!phone){alert('Merci de remplir tous les champs !');return;}
+      var total=selectedServices.reduce(function(s,x){return s+x.price;},0);
+      document.getElementById('success-recap').innerHTML=
+        '<div style="margin-bottom:10px;font-size:13px;color:#555;">Service : <span style="color:var(--gold);font-weight:600;">'+selectedServices.map(function(s){return s.name;}).join(' + ')+' — '+total+'€</span></div>'+
+        '<div style="margin-bottom:10px;font-size:13px;color:#555;">Date : <span style="color:#f5f5f5;font-weight:600;">'+selectedDate+'</span></div>'+
+        '<div style="margin-bottom:10px;font-size:13px;color:#555;">Heure : <span style="color:#f5f5f5;font-weight:600;">'+selectedTime+'</span></div>'+
+        '<div style="font-size:13px;color:#555;">Nom : <span style="color:#f5f5f5;font-weight:600;">'+name+'</span></div>';
       goStep(5);
     }
-
-    document.querySelectorAll('.svc-card').forEach(function(c){
-      c.addEventListener('mouseenter',function(){ if(c.style.border!=='1px solid var(--gold)') c.style.background='rgba(255,255,255,0.03)'; });
-      c.addEventListener('mouseleave',function(){ if(c.style.border!=='1px solid var(--gold)') c.style.background='transparent'; });
-    });
   </script>
 
 </body>
