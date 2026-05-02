@@ -351,6 +351,8 @@
     .stats-section {
       background: var(--black);
       padding:100px 60px;
+      display:flex;
+      justify-content:center;
     }
     .stats-grid {
       display:grid;
@@ -358,6 +360,8 @@
       gap:1px;
       background:rgba(255,255,255,0.06);
       border:1px solid rgba(255,255,255,0.06);
+      width:100%;
+      max-width:1000px;
     }
     .stat-box {
       background: var(--black);
@@ -724,7 +728,7 @@
   <div class="stats-section">
     <div class="stats-grid reveal">
       <div class="stat-box">
-        <div class="stat-num"><span data-count="8">0</span>+</div>
+        <div class="stat-num"><span data-count="8" data-suffix="+">0</span></div>
         <div class="stat-lbl">Années d'expérience</div>
       </div>
       <div class="stat-box">
@@ -1005,9 +1009,10 @@
           entry.target.querySelectorAll('[data-count]').forEach(function(el){
             var target=parseInt(el.getAttribute('data-count'));
             var start=0; var step=target/(2000/16);
+            var suffix=el.getAttribute('data-suffix')||'';
             var t=setInterval(function(){
               start+=step;
-              if(start>=target){ start=target; clearInterval(t); el.textContent=target>=1000?Math.round(target/1000)+'K+':target+'+'; }
+              if(start>=target){ start=target; clearInterval(t); el.textContent=target>=1000?Math.round(target/1000)+'K+':target+suffix; }
               else { el.textContent=target>=1000?Math.round(start/1000)+'K':Math.round(start); }
             },16);
           });
