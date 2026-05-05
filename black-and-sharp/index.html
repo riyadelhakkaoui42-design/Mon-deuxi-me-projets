@@ -1154,8 +1154,13 @@
   </footer>
 
   <script>
+    /* force scroll top on every visit */
+    history.scrollRestoration = 'manual';
+    window.scrollTo(0,0);
+
     /* ─── LOADER ─── */
     window.addEventListener('load', function(){
+      window.scrollTo(0,0);
       setTimeout(function(){
         document.getElementById('loader').classList.add('hidden');
         document.getElementById('hero-bg').classList.add('loaded');
