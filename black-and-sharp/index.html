@@ -854,29 +854,42 @@
         <div id="step-1">
           <h3>Choisissez vos services</h3>
           <p>Sélectionnez un ou plusieurs services</p>
-          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;">
-            <div class="svc-card" onclick="toggleService(this,'Coupe Signature',25)">
-              <div style="font-size:28px;margin-bottom:12px;">✂️</div>
-              <div style="font-weight:600;color:#f5f5f5;margin-bottom:6px;">Coupe Signature</div>
-              <div style="color:var(--gold);font-size:18px;font-weight:700;">25€</div>
-              <div class="check-badge" style="display:none;position:absolute;top:10px;right:10px;background:var(--gold);color:#000;border-radius:50%;width:22px;height:22px;font-size:12px;line-height:22px;text-align:center;">✓</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:10px;">
+
+            <div class="svc-card" onclick="toggleService(this,'Coupe Signature',25)" style="position:relative;overflow:hidden;">
+              <div style="position:absolute;top:0;left:0;width:3px;height:100%;background:var(--gold);"></div>
+              <div style="font-size:32px;margin-bottom:14px;">✂️</div>
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:#f5f5f5;margin-bottom:6px;">Coupe Signature</div>
+              <div style="font-size:12px;color:#555;margin-bottom:14px;line-height:1.6;">Coupe sur mesure adaptée à votre style</div>
+              <div style="color:var(--gold);font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;">25€</div>
+              <div class="check-badge" style="display:none;position:absolute;top:12px;right:12px;background:var(--gold);color:#000;border-radius:50%;width:24px;height:24px;font-size:13px;line-height:24px;text-align:center;font-weight:700;">✓</div>
             </div>
-            <div class="svc-card" onclick="toggleService(this,'Rasage Traditionnel',30)">
-              <div style="font-size:28px;margin-bottom:12px;">🪒</div>
-              <div style="font-weight:600;color:#f5f5f5;margin-bottom:6px;">Rasage Traditionnel</div>
-              <div style="color:var(--gold);font-size:18px;font-weight:700;">30€</div>
-              <div class="check-badge" style="display:none;position:absolute;top:10px;right:10px;background:var(--gold);color:#000;border-radius:50%;width:22px;height:22px;font-size:12px;line-height:22px;text-align:center;">✓</div>
+
+            <div class="svc-card" onclick="toggleService(this,'Rasage Traditionnel',30)" style="position:relative;overflow:hidden;">
+              <div style="position:absolute;top:0;left:0;width:3px;height:100%;background:var(--gold);"></div>
+              <div style="font-size:32px;margin-bottom:14px;">🪒</div>
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:#f5f5f5;margin-bottom:6px;">Rasage Traditionnel</div>
+              <div style="font-size:12px;color:#555;margin-bottom:14px;line-height:1.6;">Rasage coupe-chou avec serviettes chaudes</div>
+              <div style="color:var(--gold);font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;">30€</div>
+              <div class="check-badge" style="display:none;position:absolute;top:12px;right:12px;background:var(--gold);color:#000;border-radius:50%;width:24px;height:24px;font-size:13px;line-height:24px;text-align:center;font-weight:700;">✓</div>
             </div>
-            <div class="svc-card" onclick="toggleService(this,'Pack Premium',55)">
-              <div style="font-size:28px;margin-bottom:12px;">👑</div>
-              <div style="font-weight:600;color:#f5f5f5;margin-bottom:6px;">Pack Premium</div>
-              <div style="color:var(--gold);font-size:18px;font-weight:700;">55€</div>
-              <div class="check-badge" style="display:none;position:absolute;top:10px;right:10px;background:var(--gold);color:#000;border-radius:50%;width:22px;height:22px;font-size:12px;line-height:22px;text-align:center;">✓</div>
+
+            <div class="svc-card" onclick="toggleService(this,'Pack Premium',55)" style="position:relative;overflow:hidden;border-color:rgba(201,168,76,0.3);">
+              <div style="position:absolute;top:0;left:0;width:3px;height:100%;background:var(--gold);"></div>
+              <div style="position:absolute;top:12px;right:12px;background:var(--gold);color:#000;font-size:9px;font-weight:700;letter-spacing:2px;padding:4px 8px;">BEST</div>
+              <div style="font-size:32px;margin-bottom:14px;">👑</div>
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:#f5f5f5;margin-bottom:6px;">Pack Premium</div>
+              <div style="font-size:12px;color:#555;margin-bottom:14px;line-height:1.6;">Coupe + barbe + soin visage complet</div>
+              <div style="color:var(--gold);font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;">55€</div>
+              <div class="check-badge" style="display:none;position:absolute;bottom:12px;right:12px;background:var(--gold);color:#000;border-radius:50%;width:24px;height:24px;font-size:13px;line-height:24px;text-align:center;font-weight:700;">✓</div>
             </div>
-            <div class="svc-card" onclick="toggleService(this,'Taille de Barbe',20)">
-              <div style="font-size:28px;margin-bottom:12px;">🧔</div>
-              <div style="font-weight:600;color:#f5f5f5;margin-bottom:6px;">Taille de Barbe</div>
-              <div style="color:var(--gold);font-size:18px;font-weight:700;">20€</div>
+
+            <div class="svc-card" onclick="toggleService(this,'Taille de Barbe',20)" style="position:relative;overflow:hidden;">
+              <div style="position:absolute;top:0;left:0;width:3px;height:100%;background:var(--gold);"></div>
+              <div style="font-size:32px;margin-bottom:14px;">🧔</div>
+              <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:#f5f5f5;margin-bottom:6px;">Taille de Barbe</div>
+              <div style="font-size:12px;color:#555;margin-bottom:14px;line-height:1.6;">Modelage & entretien avec produits pro</div>
+              <div style="color:var(--gold);font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:2px;">20€</div>
               <div class="check-badge" style="display:none;position:absolute;top:10px;right:10px;background:var(--gold);color:#000;border-radius:50%;width:22px;height:22px;font-size:12px;line-height:22px;text-align:center;">✓</div>
             </div>
           </div>
